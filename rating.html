@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CPUT Marketplace and Exchange</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #ffffff;
+    }
+
+    header {
+      background-color: #4da6ff;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      margin: 0;
+    }
+
+    .logo img {
+      height: 50px;
+      width: auto;
+      margin: 0;
+      padding: 0;
+      display: block;
+    }
+
+    .title {
+      font-size: 20px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .icons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .icons div {
+      width: 24px;
+      height: 24px;
+      background-color: white;
+      border-radius: 50%;
+    }
+
+    .container {
+		max-width: 800px;       
+		margin: 30px auto;
+		background-color: #b3d9ff;
+		padding: 30px;          
+		border-radius: 15px;    
+	}
+
+    h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .rating {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .star {
+		font-size: 40px;
+        cursor: pointer;                         
+		user-select: none;         
+		color: #ccc;
+		text-shadow: 1px 1px 0 black,             
+					-1px 1px 0 black,
+					1px -1px 0 black,
+					-1px -1px 0 black;
+        
+	}
+
+	.star:hover,
+	.star.selected {
+	color: gold;
+	}
+
+
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      resize: none;
+      font-size: 16px;
+      height: 100px;
+    }
+
+    .submit-btn {
+      margin-top: 15px;
+      padding: 10px 30px;
+      background-color: #4da6ff;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    footer {
+      background-color: #4da6ff;
+      text-align: center;
+      padding: 10px;
+      color: white;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      font-size: 12px;
+    }
+
+    .back-arrow {
+      font-size: 24px;
+      padding: 10px;
+      display: inline-block;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+        <img src="cput_logo.jpg" alt="CPUT Logo">
+        <span class="title">CPUT Marketplace and Exchange</span></div>
+    <div class="icons">
+        <span>👤</span>
+        <span>🔔</span>
+        <span>📦</span>
+    </div>
+  </header>
+
+  <div class="back-arrow">&#8592;</div>
+
+  <div class="container">
+    <h2>Rate Your Experience</h2>
+    <div><strong>YOUR RATING</strong></div>
+    <div class="rating" id="ratingStars">
+      <span class="star" data-value="1">&#9733;</span>
+      <span class="star" data-value="2">&#9733;</span>
+      <span class="star" data-value="3">&#9733;</span>
+      <span class="star" data-value="4">&#9733;</span>
+      <span class="star" data-value="5">&#9733;</span>
+    </div>
+
+    <div><strong>YOUR REVIEW</strong></div>
+    <textarea placeholder="Type here..."></textarea>
+    <button class="submit-btn">SUBMIT</button>
+  </div>
+
+  <footer>
+    © CPUT Marketplace. All rights reserved
+  </footer>
+
+  <script>
+    const stars = document.querySelectorAll('.star');
+    stars.forEach(star => {
+      star.addEventListener('click', () => {
+        stars.forEach(s => s.classList.remove('selected'));
+        star.classList.add('selected');
+        let value = parseInt(star.getAttribute('data-value'));
+        for (let i = 0; i < value; i++) {
+          stars[i].classList.add('selected');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
