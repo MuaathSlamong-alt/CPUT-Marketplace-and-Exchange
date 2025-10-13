@@ -49,14 +49,35 @@ document.getElementById('nextPageButton').addEventListener('click', () => {
     }
 });
 
-document.getElementById('searchButton').addEventListener('click', () => {
+
+document.getElementById('searchButton').addEventListener('click', async () => {
     const query = document.getElementById('searchInput').value.trim();
     if (query) {
-        window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+        await searchProducts(query);
     } else {
         alert('Please enter a search term.');
     }
 });
+
+async function searchProducts(query) {
+    const res = await fetch(`/products?q=${encodeURIComponent(query)}`);
+    const products = await res.json();
+    const resultsDiv = document.getElementById('searchResults');
+    resultsDiv.innerHTML = '';
+    if (products.length === 0) {
+        resultsDiv.innerHTML = '<div>No products found.</div>';
+        return;
+    }
+    products.forEach(product => {
+        const div = document.createElement('div');
+        div.className = 'product-result';
+        div.innerHTML = `
+            <img src="${product.image}" alt="${product.name}" style="max-width:60px;vertical-align:middle;"> 
+            <strong>${product.name}</strong> - R${product.price}
+        `;
+        resultsDiv.appendChild(div);
+    });
+}
 
 document.getElementById('backButton').addEventListener('click', () => {
     if (window.history.length > 1) {

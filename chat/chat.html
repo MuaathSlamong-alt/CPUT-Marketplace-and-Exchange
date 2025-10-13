@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>CPUT Marketplace Chat</title>
   <link rel="stylesheet" href="chatstyle.css">
+  <script src="/socket.io/socket.io.js"></script>
   <script src="chat.js" defer></script>
 </head>
 <body>
@@ -22,31 +23,20 @@
     <div class="main">
       <aside class="chat-list">
         <h2>Chats</h2>
-        <ul>
-          <li><strong>Nobahle Nzimande</strong><br><small>Yes, that works for me.</small></li>
-          <li>Namhla Brown<br><small>How about 11:30 during break time?</small></li>
-          <li>Robert Wilson<br><small>Thank you for the support.</small></li>
-          <li>James Smith<br><small>Great, thank you!</small></li>
-          <li>Aliyana Dalasile<br><small>I’ll check and let you know</small></li>
+        <ul id="user-list">
+          <!-- User list will be loaded dynamically -->
         </ul>
       </aside>
       <section class="chat-window">
-        <div class="chat-header">
-          <div>
-            <strong>Nobahle Nzimande</strong><br>
-            <small>Laptop</small>
-          </div>
-          <img src="../img/AsusLaptop.jpg" alt="Laptop" class="product-icon"/>
+        <div class="chat-header" id="chat-header">
+          <!-- Chat header will be loaded dynamically -->
         </div>
         <div class="chat-messages" id="chat-messages">
-          <div class="message sent">Is the laptop still available?</div>
-          <div class="message received">Yes, it is available.</div>
-          <div class="message sent">Are you available to meet tomorrow?</div>
-          <div class="message received">Yes, that works for me.</div>
+          <!-- Messages will be loaded dynamically -->
         </div>
         <div class="chat-input">
           <input type="text" id="message-input" placeholder="Type a message...">
-          <button onclick="sendMessage()">Send</button>
+          <button id="send-btn">Send</button>
         </div>
       </section>
     </div>

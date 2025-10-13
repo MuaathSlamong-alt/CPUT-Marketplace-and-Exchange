@@ -9,27 +9,34 @@
 </head>
 <body>
     <div class="wrapper">
-        <form action="">
+        <form action="/signup" method="POST">
             <h1>Sign Up</h1>
              <div class="input-box">
-                <input type="username" placeholder="Username" required>
+                <input type="text" name="username" placeholder="Username" required>
                 <i class='bx bxs-user'></i>
             </div>
+            <!-- Email field is present but not used in backend, so keep for UI only -->
             <div class="input-box">
-                <input type="email" placeholder="Email" required>
+                <input type="email" name="email" placeholder="Email" required>
                 <i class='bx bx-envelope' ></i>
             </div>
             <div class="input-box">
-                <input type="password" placeholder="Password" required>
+                <input type="password" name="password" placeholder="Password" required>
                 <i class='bx bxs-lock-alt'></i>
+            </div>
+            <div class="input-box">
+                <select name="role" style="width:100%;height:45px;border-radius:40px;padding:0 20px;font-size:16px;">
+                  <option value="user" selected>User</option>
+                  <option value="admin">Admin</option>
+                </select>
             </div>
             <div class="remember-forgot">
                 <label><input type="checkbox"> Remember Me</label>
                 <a href="#">Forgot Password?</a>
             </div>
-            <button type="submit" class="btn"><a href="login.html">Sign Up</a></button>
+            <button type="submit" class="btn">Sign Up</button>
             <div class="register-link">
-                <p>Already have an account?<a href="login.html">Login</a></p>
+                <p>Already have an account?<a href="../login/login.html">Login</a></p>
             </div>
             <div class="social-platform">
                 <p>Or Sign Up with</p>

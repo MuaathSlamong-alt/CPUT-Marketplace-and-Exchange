@@ -252,7 +252,7 @@
       charCount.textContent = `${messageTextarea.value.length} / 300`;
     });
 
-    submitButton.addEventListener("click", () => {
+    submitButton.addEventListener("click", async () => {
       const firstName = firstNameInput.value.trim();
       const lastName = lastNameInput.value.trim();
       const reportDate = reportDateInput.value.trim();
@@ -265,13 +265,16 @@
         return;
       }
 
+      // Submit to backend
+      await fetch('/api/report', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ firstName, lastName, reportDate, subject, message })
+      });
+
       // Show thank you message
       thankYouMessage.style.display = "block";
-
-      // Disable submit button
       submitButton.disabled = true;
-
-      // Reset form after 4 seconds
       setTimeout(() => {
         firstNameInput.value = "";
         lastNameInput.value = "";
