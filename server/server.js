@@ -1,10 +1,5 @@
-import reportRoutes from './routes/report.js';
-app.use('/', reportRoutes);
-import ratingRoutes from './routes/rating.js';
-app.use('/', ratingRoutes);
-import adminRoutes from './routes/admin.js';
-app.use('/', adminRoutes);
 import express from 'express';
+import cors from 'cors';
 import session from 'express-session';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -13,15 +8,30 @@ import { Server as SocketIO } from 'socket.io';
 import authRoutes from './routes/auth.js';
 import productRoutes from './routes/product.js';
 import chatRoutes from './routes/chat.js';
+import adminRoutes from './routes/admin.js';
+import ratingRoutes from './routes/rating.js';
+import reportRoutes from './routes/report.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 const server = http.createServer(app);
-const io = new SocketIO(server);
+// Accept CORS from common Live Server origins (you can add/remove origins as needed)
+const allowedOrigins = [
+  'http://127.0.0.1:5500',
+  'http://localhost:5500',
+  'http://127.0.0.1:5501',
+  'http://localhost:5501'
+];
+const io = new SocketIO(server, { cors: { origin: allowedOrigins, methods: ['GET','POST'] } });
+
+import pool from './models/db.js';
+app.locals.db = pool;
 
 
+// Enable CORS for API requests from Live Server (adjust origins if you use a different port)
+app.use(cors({ origin: allowedOrigins, credentials: true }));
 app.use(express.static(path.join(__dirname, '../')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -29,14 +39,22 @@ app.use(session({ secret: 'cput-secret', resave: false, saveUninitialized: true 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Auth routes
+// Auth and feature routes
 app.use('/', authRoutes);
 app.use('/', productRoutes);
 app.use('/', chatRoutes);
+app.use('/', adminRoutes);
+app.use('/', ratingRoutes);
+app.use('/', reportRoutes);
 
 // Placeholder routes
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../home/home.html'));
+});
+
+// Product submission page
+app.get('/submit-product', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'product.html'));
 });
 
 // TODO: Add authentication, product, admin, chat routes

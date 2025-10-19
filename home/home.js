@@ -1,4 +1,6 @@
 window.addEventListener('DOMContentLoaded', async () => {
+    // API base: when using Live Server, set window.__API_BASE__ to your backend (e.g. 'http://localhost:3000')
+    const API_BASE = window.__API_BASE__ || '';
     // Menu item click handlers
     const menuItems = document.querySelectorAll('.menu-item');
     menuItems.forEach(item => {
@@ -12,7 +14,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     const grid = document.querySelector('.products-grid');
     if (grid) {
         try {
-            const res = await fetch('/products');
+            const res = await fetch(API_BASE + '/products');
             const products = await res.json();
             grid.innerHTML = '';
             products.forEach(product => {

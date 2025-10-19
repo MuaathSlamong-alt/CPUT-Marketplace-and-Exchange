@@ -26,12 +26,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  const API_BASE = window.__API_BASE__ || '';
   submitBtn.addEventListener('click', async () => {
     if (!selected || !textarea.value.trim()) {
       alert('Please select a rating and enter a review.');
       return;
     }
-    await fetch('/api/rating', {
+  await fetch(API_BASE + '/api/rating', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ rating: selected, review: textarea.value })

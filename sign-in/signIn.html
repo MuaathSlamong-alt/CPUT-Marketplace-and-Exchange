@@ -48,5 +48,21 @@
             </div>
         </form>
     </div>
+                <!-- Live Server helper: if this page is opened via Live Server (localhost:5500)
+                         set the API base to your backend and rewrite the form action so the POST
+                         goes to the backend instead of Live Server. Adjust port if your server
+                         uses a different port. -->
+                <script>
+                    (function(){
+                        const host = location.hostname;
+                        // Detect Live Server hosts and set backend base
+                        if (host === '127.0.0.1' || host === 'localhost') {
+                            window.__API_BASE__ = 'http://localhost:3000';
+                            // rewrite form action if it's the default absolute path
+                            const f = document.querySelector('form[action="/signup"]');
+                            if (f) f.action = window.__API_BASE__ + '/signup';
+                        }
+                    })();
+                </script>
 </body>
 </html>

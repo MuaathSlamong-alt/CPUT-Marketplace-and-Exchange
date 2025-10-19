@@ -2,11 +2,12 @@
 let currentUserId = null;
 let selectedUserId = null;
 let socket = null;
+const API_BASE = window.__API_BASE__ || '';
 
 // Fetch current user info
 async function getCurrentUser() {
   // This endpoint should return { id, username }
-  const res = await fetch('/api/me');
+  const res = await fetch(API_BASE + '/api/me');
   if (res.ok) return res.json();
   return null;
 }
@@ -14,14 +15,14 @@ async function getCurrentUser() {
 // Fetch user list (simulate for now)
 async function getUserList() {
   // This endpoint should return [{ id, username }]
-  const res = await fetch('/api/users');
+  const res = await fetch(API_BASE + '/api/users');
   if (res.ok) return res.json();
   return [];
 }
 
 // Fetch chat history
 async function getChatHistory(userId) {
-  const res = await fetch(`/chat/${userId}`);
+  const res = await fetch(API_BASE + `/chat/${userId}`);
   if (res.ok) return res.json();
   return [];
 }
@@ -77,7 +78,7 @@ async function sendMessage() {
   const messageText = input.value.trim();
   if (!messageText || !selectedUserId) return;
   // Send to backend
-  await fetch(`/chat/${selectedUserId}`, {
+  await fetch(API_BASE + `/chat/${selectedUserId}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ content: messageText })
@@ -96,7 +97,12 @@ async function sendMessage() {
 
 // Listen for incoming messages
 function setupSocket() {
-  socket = io();
+  // If API_BASE is set and it's a full origin, use it to connect socket.io across origins
+  if (API_BASE && API_BASE.startsWith('http')) {
+    socket = io(API_BASE);
+  } else {
+    socket = io();
+  }
   socket.on('chatMessage', ({ fromUserId, toUserId, content }) => {
     if (fromUserId === selectedUserId || toUserId === selectedUserId) {
       const box = document.getElementById('chat-messages');

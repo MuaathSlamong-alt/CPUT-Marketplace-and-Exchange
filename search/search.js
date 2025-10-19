@@ -59,8 +59,9 @@ document.getElementById('searchButton').addEventListener('click', async () => {
     }
 });
 
+const API_BASE = window.__API_BASE__ || '';
 async function searchProducts(query) {
-    const res = await fetch(`/products?q=${encodeURIComponent(query)}`);
+    const res = await fetch(API_BASE + `/products?q=${encodeURIComponent(query)}`);
     const products = await res.json();
     const resultsDiv = document.getElementById('searchResults');
     resultsDiv.innerHTML = '';

@@ -27,12 +27,18 @@ router.post('/login', async (req, res) => {
 
 // Handle sign up
 router.post('/signup', async (req, res) => {
-  const { username, password, role } = req.body;
+  const { username, password, role, adminToken } = req.body;
   if (!username || !password) return res.send('All fields required');
   const existing = await findUserByUsername(username);
   if (existing) return res.send('Username already taken');
   const hash = await bcrypt.hash(password, 10);
-  await createUser({ username, password: hash, role: role || 'user' });
+  // Prevent arbitrary admin creation unless valid token provided
+  let finalRole = role || 'user';
+  if (finalRole === 'admin') {
+    const secret = process.env.ADMIN_CREATE_TOKEN || 'dev-secret';
+    if (!adminToken || adminToken !== secret) return res.status(403).send('Invalid admin token');
+  }
+  await createUser({ username, password: hash, role: finalRole });
   // Auto-login after signup
   const user = await findUserByUsername(username);
   req.session.user = { id: user.id, username: user.username, role: user.role };
@@ -44,6 +50,19 @@ router.get('/logout', (req, res) => {
   req.session.destroy(() => {
     res.redirect('/login');
   });
+});
+
+// API: return current logged-in user (used by chat frontend)
+router.get('/api/me', (req, res) => {
+  if (!req.session.user) return res.status(401).json(null);
+  res.json(req.session.user);
+});
+
+// API: list users for chat
+router.get('/api/users', async (req, res) => {
+  // Return a list of users (id, username)
+  const rows = await (await import('../models/db.js')).default.query('SELECT id, username FROM users').then(r=>r[0]);
+  res.json(rows);
 });
 
 export default router;

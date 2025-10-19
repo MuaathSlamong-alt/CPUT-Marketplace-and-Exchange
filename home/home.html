@@ -34,6 +34,13 @@
                     <div class="search-text">Search</div>
                 </a>
             </div>
+            <!-- Post product link visible to users in the sidebar -->
+            <div style="margin:12px 0;">
+                <a href="../product.html" style="display:flex;align-items:center;text-decoration:none;padding:10px;background:#f4f4f4;border-radius:8px;">
+                    <img src="../img/upload_127070.png" alt="Post" style="width:28px;height:28px;margin-right:8px;"> 
+                    <span>Post product</span>
+                </a>
+            </div>
   
             <button class="menu-item">Laptops</button>
             <button class="menu-item">Hair</button>
@@ -127,6 +134,19 @@
         <div class="copyright">© CPUT Marketplace. All rights reserved.</div>
     </footer>
 
+    <!-- When using Live Server (e.g. http://127.0.0.1:5500), set API_BASE to your backend URL -->
+    <script>
+        (function() {
+            const hostname = location.hostname;
+            // If served by Live Server default port, point API to backend at localhost:3000
+            if (hostname === '127.0.0.1' || hostname === 'localhost') {
+                // only set when we're on the Live Server port(s)
+                if (location.port === '5500' || location.port === '5501') {
+                    window.__API_BASE__ = 'http://localhost:3000';
+                }
+            }
+        })();
+    </script>
     <script src="home.js"></script>
 
 </body>

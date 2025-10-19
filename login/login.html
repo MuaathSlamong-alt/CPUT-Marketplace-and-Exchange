@@ -37,5 +37,18 @@
             </div>
         </form>
     </div>
+            <!-- Live Server helper: when opening via Live Server (localhost:5500)
+                     set API base and point the form to the backend so the POST goes to
+                     http://localhost:3000/login instead of Live Server. -->
+            <script>
+                (function(){
+                    const host = location.hostname;
+                    if (host === '127.0.0.1' || host === 'localhost') {
+                        window.__API_BASE__ = 'http://localhost:3000';
+                        const f = document.querySelector('form[action="/login"]');
+                        if (f) f.action = window.__API_BASE__ + '/login';
+                    }
+                })();
+            </script>
 </body>
 </html>
