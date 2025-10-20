@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPUT Marketplace and Exchange</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f9f9f9;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #3498db;
+            color: white;
+            padding: 10px 20px;
+        }
+
+        header img.logo {
+            height: 40px;
+        }
+
+        header h1 {
+            flex-grow: 1;
+            text-align: center;
+            margin: 0;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        header .icons {
+            display: flex;
+            gap: 15px;
+            font-size: 20px;
+        }
+
+        /* Search bar */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px auto;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            gap: 10px;
+        }
+
+        .nav-arrow {
+            background: #3498db;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-arrow:hover {
+            background: #2980b9;
+        }
+
+        .search-input {
+            flex-grow: 1;
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+        }
+
+        .search-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            background: #3498db;
+            color: white;
+            cursor: pointer;
+        }
+
+        .search-button:hover {
+            background: #2980b9;
+        }
+
+        /* Category & product grid */
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .category {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            padding: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .category:hover {
+            transform: scale(1.05);
+        }
+
+        .category img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .category p {
+            margin-top: 8px;
+            font-weight: bold;
+        }
+
+        /* Pagination */
+        .pagination {
+            text-align: center;
+            margin: 10px;
+            font-size: 14px;
+        }
+
+        /* Footer */
+        footer {
+            background: #3498db;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        /* No results message */
+        .no-results {
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+    <img src="images/img.png" alt="CPUT Logo" class="logo">
+    <h1>CPUT Marketplace and Exchange</h1>
+    <div class="icons">
+        🔔 👤
+    </div>
+</header>
+
+<!-- Search bar -->
+<div class="search-container">
+    <div class="search-bar">
+        <button class="nav-arrow" onclick="prevPage()">&#10094;</button>
+        <input type="text" id="searchInput" placeholder="Search" onkeyup="handleSearch(event)" class="search-input">
+        <button class="search-button" onclick="searchProduct()">Search</button>
+        <button class="nav-arrow" onclick="nextPage()">&#10095;</button>
+    </div>
+</div>
+
+<!-- Page Indicator -->
+<div class="pagination" id="pageIndicator">
+    Page 1 of 2
+</div>
+
+<!-- Categories -->
+<h2 style="text-align:center;">Categories</h2>
+<div class="categories" id="categories">
+    <div class="category" data-name="laptops"><img src="images/laptop.jpg" alt="Laptops"><p>LAPTOPS</p></div>
+    <div class="category" data-name="hair"><img src="images/hair.jpg" alt="Hair"><p>HAIR</p></div>
+    <div class="category" data-name="textbooks"><img src="images/books.jpg" alt="Textbooks"><p>TEXTBOOKS</p></div>
+    <div class="category" data-name="clothes"><img src="images/clothes.jpg" alt="Clothes"><p>CLOTHES</p></div>
+    <div class="category" data-name="nails"><img src="images/nails.jpg" alt="Nails"><p>NAILS</p></div>
+    <div class="category" data-name="phones & tablets"><img src="images/phones&tablets.jpg" alt="Phones"><p>PHONES & TABLETS</p></div>
+    <div class="category" data-name="stationary"><img src="images/stationary.jpg" alt="Stationary"><p>STATIONARY</p></div>
+    <div class="category" data-name="graduation attire"><img src="images/attire.jpg" alt="Graduation Attire"><p>GRADUATION ATTIRE</p></div>
+    <div class="category" data-name="photoshoot"><img src="images/photoshoot.jpg" alt="Photoshoot"><p>PHOTOSHOOT</p></div>
+    <div class="category" data-name="goods"><img src="images/goods.jpg" alt="Goods"><p>GOODS</p></div>
+</div>
+
+<!-- Footer -->
+<footer>
+    © CPUT Marketplace. All rights reserved
+</footer>
+
+<script>
+    let currentPage = 1;
+    const totalPages = 2;
+    const allCategories = document.querySelectorAll('.category');
+    const categoriesContainer = document.getElementById('categories');
+
+    // Example products for each category
+    const products = {
+        nails: [
+            { name: "Acrylic Set", image: "images/nail1.jpg", price: "R120" },
+            { name: "Gel Polish", image: "images/nail2.jpg", price: "R90" },
+            { name: "Nail Kit", image: "images/nail3.jpg", price: "R150" }
+        ],
+        laptops: [
+            { name: "Dell Inspiron", image: "images/laptop1.jpg", price: "R5000" },
+            { name: "HP Pavilion", image: "images/laptop2.jpg", price: "R6000" }
+        ]
+        // Add more categories + products here
+    };
+
+    const page2Categories = [
+        {name: "LAPTOP PARTS", image: "images/parts.jpg"},
+        {name: "SOFT DRINKS", image: "images/drinks.jpg"},
+        {name: "BAGS", image: "images/bags.jpg"},
+        {name: "HAIRDRESSERS", image: "images/hairdressers.jpg"},
+        {name: "MAKEUP ARTISTS", image: "images/makeup-artists.jpg"},
+        {name: "EVENTS PLANNERS", image: "images/events-planners.jpg"},
+        {name: "SPORTS CLOTHES", image: "images/sports-clothes.jpg"},
+        {name: "APPLIANCES", image: "images/appliances.jpg"}
+    ];
+
+    function initCategories() {
+        allCategories.forEach(category => {
+            const categoryName = category.querySelector('p').textContent.toLowerCase();
+            category.setAttribute('data-name', categoryName);
+
+            // Make categories clickable
+            category.addEventListener('click', () => {
+                showProducts(categoryName);
+            });
+        });
+    }
+
+    function showProducts(categoryName) {
+        categoriesContainer.innerHTML = '';
+        const selectedProducts = products[categoryName] || [];
+
+        if (selectedProducts.length === 0) {
+            categoriesContainer.innerHTML = `<div class="no-results">No products available in ${categoryName.toUpperCase()}.</div>`;
+            return;
+        }
+
+        selectedProducts.forEach(prod => {
+            const prodDiv = document.createElement('div');
+            prodDiv.className = 'category';
+            prodDiv.innerHTML = `
+                <img src="${prod.image}" alt="${prod.name}">
+                <p>${prod.name}</p>
+                <p>${prod.price}</p>
+            `;
+            categoriesContainer.appendChild(prodDiv);
+        });
+
+        // Back button
+        const backBtn = document.createElement('button');
+        backBtn.innerText = "⬅ Back to Categories";
+        backBtn.className = "search-button";
+        backBtn.onclick = showCurrentPage;
+        categoriesContainer.appendChild(backBtn);
+    }
+
+    function filterCategories(query) {
+        const filteredCategories = [];
+
+        allCategories.forEach(category => {
+            const categoryName = category.getAttribute('data-name');
+            if (categoryName.includes(query.toLowerCase())) {
+                filteredCategories.push(category.cloneNode(true));
+            }
+        });
+
+        if (currentPage === 2 || query !== '') {
+            page2Categories.forEach(cat => {
+                if (cat.name.toLowerCase().includes(query.toLowerCase())) {
+                    const categoryDiv = document.createElement('div');
+                    categoryDiv.className = 'category';
+                    categoryDiv.setAttribute('data-name', cat.name.toLowerCase());
+                    categoryDiv.innerHTML = `
+                        <img src="${cat.image}" alt="${cat.name}">
+                        <p>${cat.name}</p>
+                    `;
+                    categoryDiv.addEventListener('click', () => {
+                        showProducts(cat.name.toLowerCase());
+                    });
+                    filteredCategories.push(categoryDiv);
+                }
+            });
+        }
+
+        return filteredCategories;
+    }
+
+    function displayFilteredCategories(query) {
+        categoriesContainer.innerHTML = '';
+
+        if (query === '') {
+            showCurrentPage();
+            return;
+        }
+
+        const filtered = filterCategories(query);
+
+        if (filtered.length === 0) {
+            categoriesContainer.innerHTML = '<div class="no-results">No categories found matching your search.</div>';
+        } else {
+            filtered.forEach(category => {
+                categoriesContainer.appendChild(category);
+            });
+        }
+    }
+
+    function showCurrentPage() {
+        categoriesContainer.innerHTML = '';
+
+        if (currentPage === 1) {
+            allCategories.forEach(category => {
+                const clone = category.cloneNode(true);
+                clone.addEventListener('click', () => {
+                    showProducts(category.getAttribute('data-name'));
+                });
+                categoriesContainer.appendChild(clone);
+            });
+        } else if (currentPage === 2) {
+            page2Categories.forEach(cat => {
+                const categoryDiv = document.createElement('div');
+                categoryDiv.className = 'category';
+                categoryDiv.setAttribute('data-name', cat.name.toLowerCase());
+                categoryDiv.innerHTML = `
+                    <img src="${cat.image}" alt="${cat.name}">
+                    <p>${cat.name}</p>
+                `;
+                categoryDiv.addEventListener('click', () => {
+                    showProducts(cat.name.toLowerCase());
+                });
+                categoriesContainer.appendChild(categoryDiv);
+            });
+        }
+    }
+
+    function handleSearch(event) {
+        if (event.key === 'Enter') {
+            searchProduct();
+        }
+    }
+
+    function searchProduct() {
+        const query = document.getElementById('searchInput').value.trim();
+        displayFilteredCategories(query);
+        updatePageIndicator();
+    }
+
+    function resetSearch() {
+        document.getElementById('searchInput').value = '';
+        showCurrentPage();
+    }
+
+    function updatePageIndicator() {
+        document.getElementById("pageIndicator").innerText = `Page ${currentPage} of ${totalPages}`;
+    }
+
+    function prevPage() {
+        if (currentPage > 1) {
+            currentPage--;
+            showCurrentPage();
+            updatePageIndicator();
+        }
+    }
+
+    function nextPage() {
+        if (currentPage < totalPages) {
+            currentPage++;
+            showCurrentPage();
+            updatePageIndicator();
+        }
+    }
+
+    function init() {
+        initCategories();
+        updatePageIndicator();
+        document.querySelector('header h1').addEventListener('click', resetSearch);
+    }
+
+    window.onload = init;
+</script>
+
+</body>
+</html>
