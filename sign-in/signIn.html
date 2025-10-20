@@ -57,10 +57,10 @@
                         const host = location.hostname;
                         // Detect Live Server hosts and set backend base
                         if (host === '127.0.0.1' || host === 'localhost') {
-                            window.__API_BASE__ = 'http://localhost:3000';
+                            globalThis.__API_BASE__ = 'http://localhost:3000';
                             // rewrite form action if it's the default absolute path
                             const f = document.querySelector('form[action="/signup"]');
-                            if (f) f.action = window.__API_BASE__ + '/signup';
+                            if (f) f.action = globalThis.__API_BASE__ + '/signup';
                         }
                     })();
                 </script>

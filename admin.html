@@ -28,19 +28,20 @@
       products.forEach(prod => {
         const div = document.createElement('div');
         div.className = 'pending-card';
-        div.innerHTML = `
-          <strong>${prod.name}</strong> - R${prod.price}<br>
-          <img src="${prod.image}" alt="${prod.name}" style="max-width:100px;"><br>
-          <button class="approve-btn" onclick="approve(${prod.id})">Approve</button>
-        `;
+        div.innerHTML = \`
+          <strong>\${prod.name}</strong> - R\${prod.price}<br>
+          <img src="\${prod.image}" alt="\${prod.name}" style="max-width:100px;"><br>
+          <button class="approve-btn" onclick="approve(\${prod.id})">Approve</button>
+        \`;
         list.appendChild(div);
       });
     }
     async function approve(id) {
-      await fetch(`/admin/approve/${id}`, { method: 'POST' });
+      await fetch(\`/admin/approve/\${id}\`, { method: 'POST' });
       loadPending();
     }
     window.onload = loadPending;
   </script>
 </body>
 </html>
+

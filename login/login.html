@@ -44,9 +44,9 @@
                 (function(){
                     const host = location.hostname;
                     if (host === '127.0.0.1' || host === 'localhost') {
-                        window.__API_BASE__ = 'http://localhost:3000';
+                        globalThis.__API_BASE__ = 'http://localhost:3000';
                         const f = document.querySelector('form[action="/login"]');
-                        if (f) f.action = window.__API_BASE__ + '/login';
+                        if (f) f.action = globalThis.__API_BASE__ + '/login';
                     }
                 })();
             </script>

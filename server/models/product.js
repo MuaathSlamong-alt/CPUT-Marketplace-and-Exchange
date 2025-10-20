@@ -20,9 +20,6 @@ export async function getApprovedProducts() {
   return rows;
 }
 
-export async function approveProduct(productId) {
-  await pool.query('UPDATE products SET approved = 1 WHERE id = ?', [productId]);
-}
 
 export async function getProductById(id) {
   const [rows] = await pool.query(

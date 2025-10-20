@@ -4,234 +4,62 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CPUT Marketplace and Exchange</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
-
-    body {
-      background-color: #ffffff;
-    }
-
-    header {
-      background-color: #4da6ff;
-      color: white;
-      padding: 10px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      margin: 0;
-    }
-
-    .logo img {
-      height: 50px;
-      width: auto;
-      margin: 0;
-      padding: 0;
-      display: block;
-    }
-
-    .title {
-      font-size: 20px;
-      font-weight: bold;
-      white-space: nowrap;
-    }
-
-    .icons {
-      display: flex;
-      gap: 15px;
-    }
-
-    .icons div {
-      width: 24px;
-      height: 24px;
-      background-color: white;
-      border-radius: 50%;
-    }
-
-    .container {
-		max-width: 800px;       
-		margin: 30px auto;
-		background-color: #b3d9ff;
-		padding: 30px;          
-		border-radius: 15px;    
-	}
-
-    h2 {
-      font-size: 20px;
-      margin-bottom: 10px;
-    }
-
-    .rating {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    .star {
-		font-size: 40px;
-        cursor: pointer;                         
-		user-select: none;         
-		color: #ccc;
-		text-shadow: 1px 1px 0 black,             
-					-1px 1px 0 black,
-					1px -1px 0 black,
-					-1px -1px 0 black;
-        
-	}
-
-	.star:hover,
-	.star.selected {
-	color: gold;
-	}
-
-
-    textarea {
-      width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      resize: none;
-      font-size: 16px;
-      height: 100px;
-    }
-
-    .submit-btn {
-      margin-top: 15px;
-      padding: 10px 30px;
-      background-color: #4da6ff;
-      color: white;
-      border: none;
-      border-radius: 20px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .thank-you {
-    text-align: center;
-    color: green;
-    font-weight: 700;
-    margin-top: 5px;
-    font-size: 14px;
-  }
-
-    footer {
-      background-color: #4da6ff;
-      text-align: center;
-      padding: 10px;
-      color: white;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      font-size: 12px;
-    }
-
-    .back-arrow {
-      font-size: 24px;
-      padding: 10px;
-      display: inline-block;
-      cursor: pointer;
-    }
-  </style>
+  <link rel="stylesheet" href="../home/homestyle.css">
 </head>
 <body>
 
   <header>
     <div class="logo">
-        <img src="../cput_logo.jpg" alt="CPUT Logo">
-        <span class="title">CPUT Marketplace and Exchange</span>
-      </div>
-    <div class="icons">
-        <span>👤</span>
-        <span>🔔</span>
-        <span>📦</span>
+  <img src="../img/CPUTLogo.jpg" alt="CPUT Logo" class="logo-img">
+    </div>
+    <h1 class="header-title">CPUT Marketplace and Exchange</h1>
+    <div class="header-icons">
+  <img src="../img/messenger_2111573.png" alt="Message" class="header-icon" id="messengerIcon">
+  <img src="../img/time_16601413.png" alt="Notifications" class="header-icon">
+  <img src="../img/user_9190837.png" alt="User" class="header-icon">
     </div>
   </header>
-
-  <div class="back-arrow">&#8592;</div>
-
-  <div class="container">
-    <h2>Rate Your Experience</h2>
-    <div><strong>YOUR RATING</strong></div>
-    <div class="rating" id="ratingStars">
-      <span class="star" data-value="1">&#9733;</span>
-      <span class="star" data-value="2">&#9733;</span>
-      <span class="star" data-value="3">&#9733;</span>
-      <span class="star" data-value="4">&#9733;</span>
-      <span class="star" data-value="5">&#9733;</span>
-    </div>
-
-    <div>
-      <strong>YOUR REVIEW</strong></div>
-    <textarea placeholder="Type here..."></textarea>
-    <button class="submit-btn">SUBMIT</button>
-  <div class="thank-you" style="display:none;">Thank you for your feedback!</div>
-
+  <div class="main-container">
+    <aside class="sidebar">
+      <div class="search-container">
+        <a href="../home/home.html" style="display: flex; align-items: center; text-decoration: none;">
+          <img src="../img/search_16705149.png" alt="Search" class="search-icon">
+          <div class="search-text">Home</div>
+        </a>
+      </div>
+      <button class="menu-item" onclick="window.location.href='../home/home.html'">Back to Home</button>
+      <button class="menu-item" onclick="window.location.href='../chat/chat.html'">Chat</button>
+      <button class="menu-item" onclick="window.location.href='../search/search.html'">Search</button>
+    </aside>
+    <main class="content-area">
+      <h2 class="section-title">Rate Your Experience</h2>
+      <div class="featured-product" style="box-shadow:none; margin-bottom:20px;max-width:500px;">
+        <div style="margin-bottom:18px;"><strong>YOUR RATING</strong></div>
+        <div class="rating" id="ratingStars">
+          <span class="star" data-value="1">&#9733;</span>
+          <span class="star" data-value="2">&#9733;</span>
+          <span class="star" data-value="3">&#9733;</span>
+          <span class="star" data-value="4">&#9733;</span>
+          <span class="star" data-value="5">&#9733;</span>
+        </div>
+        <div style="margin-bottom:8px;"><strong>YOUR REVIEW</strong></div>
+        <textarea placeholder="Type here..." maxlength="300"></textarea>
+        <div style="margin:6px 0;color:#888;font-size:0.95rem;">
+          <span class="char-counter">0 / 300</span>
+        </div>
+        <button class="menu-item submit-btn" style="width:100%;margin-top:8px;">SUBMIT</button>
+        <div class="thank-you" style="display:none;">Thank you for your feedback!</div>
+      </div>
+    </main>
   </div>
-
   <footer>
-    © CPUT Marketplace. All rights reserved
-  <script src="rating.js"></script>
+    <div class="copyright">© CPUT Marketplace. All rights reserved.</div>
+    <script>
+      document.getElementById('messengerIcon').onclick = function() {
+        globalThis.location.href = '../chat/chat.html';
+      };
+    </script>
+    <script src="rating.js"></script>
   </footer>
-
-  <script>
-   // Select elements
-  const stars = document.querySelectorAll('.star');
-  const textarea = document.querySelector('textarea');
-  const charCounter = document.querySelector('.char-counter');
-  const submitBtn = document.querySelector('.submit-btn');
-  const thankYou = document.querySelector('.thank-you');
-
-  let selectedRating = 0;
-
-  thankYou.style.display = 'none';
-
-  // Star click event
-  stars.forEach(star => {
-    star.addEventListener('click', () => {
-      selectedRating = star.getAttribute('data-value');
-      stars.forEach(s => s.classList.remove('selected'));
-      star.classList.add('selected');
-      let prev = star.previousElementSibling;
-      while (prev) {
-        prev.classList.add('selected');
-        prev = prev.previousElementSibling;
-      }
-    });
-  });
-
-  // Character counter
-  textarea.addEventListener('input', () => {
-    charCounter.textContent = `${textarea.value.length} / 300`;
-  });
-
-  // Submit
-  submitBtn.addEventListener('click', () => {
-    if (selectedRating === 0 || textarea.value.trim() === '') {
-      alert('❗ Please select a rating and enter a review.');
-      return;
-    }
-
-    thankYou.style.display = 'block';
-    submitBtn.disabled = true;
-
-    setTimeout(() => {
-      textarea.value = '';
-      charCounter.textContent = '0 / 300';
-      stars.forEach(s => s.classList.remove('selected'));
-      selectedRating = 0;
-      thankYou.style.display = 'none';
-      submitBtn.disabled = false;
-    }, 3000);
-  });
-  </script>
 </body>
 </html>

@@ -21,27 +21,22 @@ router.post('/login', async (req, res) => {
   if (!user) return res.send('Invalid username or password');
   const match = await bcrypt.compare(password, user.password);
   if (!match) return res.send('Invalid username or password');
-  req.session.user = { id: user.id, username: user.username, role: user.role };
+  req.session.user = { id: user.id, username: user.username };
   res.redirect('/home/home.html');
 });
 
 // Handle sign up
 router.post('/signup', async (req, res) => {
-  const { username, password, role, adminToken } = req.body;
+  const { username, password } = req.body;
   if (!username || !password) return res.send('All fields required');
   const existing = await findUserByUsername(username);
   if (existing) return res.send('Username already taken');
   const hash = await bcrypt.hash(password, 10);
-  // Prevent arbitrary admin creation unless valid token provided
-  let finalRole = role || 'user';
-  if (finalRole === 'admin') {
-    const secret = process.env.ADMIN_CREATE_TOKEN || 'dev-secret';
-    if (!adminToken || adminToken !== secret) return res.status(403).send('Invalid admin token');
-  }
-  await createUser({ username, password: hash, role: finalRole });
+  // Only allow user role
+  await createUser({ username, password: hash });
   // Auto-login after signup
   const user = await findUserByUsername(username);
-  req.session.user = { id: user.id, username: user.username, role: user.role };
+  req.session.user = { id: user.id, username: user.username };
   res.redirect('/home/home.html');
 });
 

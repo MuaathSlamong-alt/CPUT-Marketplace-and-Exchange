@@ -1,6 +1,6 @@
-window.addEventListener('DOMContentLoaded', async () => {
+globalThis.addEventListener('DOMContentLoaded', async () => {
     // API base: when using Live Server, set window.__API_BASE__ to your backend (e.g. 'http://localhost:3000')
-    const API_BASE = window.__API_BASE__ || '';
+    const API_BASE = globalThis.__API_BASE__ || '';
     // Menu item click handlers
     const menuItems = document.querySelectorAll('.menu-item');
     menuItems.forEach(item => {

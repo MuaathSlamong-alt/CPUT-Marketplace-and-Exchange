@@ -7,26 +7,36 @@ document.addEventListener('DOMContentLoaded', () => {
   const thankYou = document.querySelector('.thank-you');
   let selected = 0;
 
+
   stars.forEach(star => {
     star.addEventListener('mouseover', () => {
-      highlightStars(star.dataset.value);
+      highlightStars(Number(star.dataset.value));
     });
     star.addEventListener('mouseout', () => {
-      highlightStars(selected);
+      highlightStars(Number(selected));
     });
     star.addEventListener('click', () => {
-      selected = star.dataset.value;
+      selected = Number(star.dataset.value);
       highlightStars(selected);
+    });
+    star.setAttribute('tabindex', '0');
+    star.setAttribute('role', 'button');
+    star.setAttribute('aria-label', `Rate ${star.dataset.value} star${star.dataset.value > 1 ? 's' : ''}`);
+    star.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        selected = Number(star.dataset.value);
+        highlightStars(selected);
+      }
     });
   });
 
   function highlightStars(count) {
     stars.forEach(star => {
-      star.classList.toggle('selected', star.dataset.value <= count);
+      star.classList.toggle('selected', Number(star.dataset.value) <= count);
     });
   }
 
-  const API_BASE = window.__API_BASE__ || '';
+  const API_BASE = globalThis.__API_BASE__ || '';
   submitBtn.addEventListener('click', async () => {
     if (!selected || !textarea.value.trim()) {
       alert('Please select a rating and enter a review.');

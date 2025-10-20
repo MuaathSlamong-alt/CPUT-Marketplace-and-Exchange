@@ -2,7 +2,7 @@
 let currentUserId = null;
 let selectedUserId = null;
 let socket = null;
-const API_BASE = window.__API_BASE__ || '';
+const API_BASE = globalThis.__API_BASE__ || '';
 
 // Fetch current user info
 async function getCurrentUser() {
@@ -150,14 +150,14 @@ function setupSocket() {
   });
 }
 
-window.addEventListener('DOMContentLoaded', async () => {
+globalThis.addEventListener('DOMContentLoaded', async () => {
   const me = await getCurrentUser();
   if (!me) return;
   currentUserId = me.id;
   setupSocket();
   await renderUserList();
   // Auto-open ?to=ID conversations
-  const params = new URLSearchParams(window.location.search);
+  const params = new URLSearchParams(globalThis.location.search);
   const to = params.get('to');
   if (to) {
     // wait a tick while list renders

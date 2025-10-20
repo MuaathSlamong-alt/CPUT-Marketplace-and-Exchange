@@ -9,83 +9,67 @@
 <body>
   <header>
     <div class="logo">
-      <img src="img/CPUTLogo.jpg" alt="CPUT Marketplace Logo" class="logo-img">
+      <img src="../img/CPUTLogo.jpg" alt="CPUT Marketplace Logo" class="logo-img">
     </div>
     <h1 class="header-title">CPUT Marketplace and Exchange</h1>
     <div class="header-icons">
-      <img src="img/messenger_2111573.png" alt="Message" class="header-icon">
-      <img src="img/time_16601413.png" alt="Notifications" class="header-icon">
-      <img src="img/user_9190837.png" alt="User" class="header-icon">
+  <img src="../img/messenger_2111573.png" alt="Message" class="header-icon" id="messengerIcon">
+      <img src="../img/time_16601413.png" alt="Notifications" class="header-icon">
+      <img src="../img/user_9190837.png" alt="User" class="header-icon">
     </div>
   </header>
 
   <div class="main-container">
-    <aside class="sidebar">
+    <aside class="sidebar" aria-label="Sidebar navigation">
       <div class="search-container">
         <a href="search/search.html" style="display:flex;align-items:center;text-decoration:none;">
-          <img src="img/search_16705149.png" alt="Search" class="search-icon">
+          <img src="../img/search_16705149.png" alt="Search" class="search-icon">
           <div class="search-text">Search</div>
         </a>
       </div>
-
-      <a class="menu-item" href="home/home.html">Home</a>
-      <a class="menu-item" href="rating/rating.html">Rate us</a>
-      <a class="menu-item" href="chat/chat.html">Chat</a>
-
       <div style="margin:12px 0;">
         <a href="product.html" style="display:flex;align-items:center;text-decoration:none;padding:10px;background:#f4f4f4;border-radius:8px;">
-            <img src="img/upload_127070.png" alt="Post" style="width:28px;height:28px;margin-right:8px;"> 
-            <span>Post product</span>
+          <img src="../img/post_17678551.png" alt="Post" style="width:28px;height:28px;margin-right:8px;"> 
+          <span>Post product</span>
         </a>
       </div>
+      <button class="menu-item" onclick="globalThis.location.href='home/home.html'">Back to Home</button>
+      <button class="menu-item" onclick="globalThis.location.href='chat/chat.html'">Chat</button>
+      <button class="menu-item" onclick="globalThis.location.href='search/search.html'">Search</button>
+      <button class="review-us-btn" onclick="globalThis.location.href='rating/rating.html'">
+        <span class="review-us-text">Review us</span>
+        <img src="../img/review_707675.png" alt="" class="review-icon">
+      </button>
     </aside>
-
-    <main class="content-area">
-      <h2 class="section-title">Post a product</h2>
-      <div class="featured-product" style="padding:20px;">
-        <form id="productForm" method="POST" action="/products" enctype="multipart/form-data" style="width:100%;max-width:640px;">
-          <div style="display:flex;gap:12px;flex-direction:column">
-            <label style="font-weight:600">Product name</label>
-            <input name="name" placeholder="Product name" required style="padding:12px;border-radius:8px;border:1px solid #e0e0e0" />
-
-            <label style="font-weight:600">Price (numbers only)</label>
-            <input name="price" placeholder="Price" required style="padding:12px;border-radius:8px;border:1px solid #e0e0e0" />
-
-            <label style="font-weight:600">Image</label>
-            <input type="file" name="image" accept="image/*" required />
-
-            <div style="display:flex;gap:12px;margin-top:8px">
-              <button type="submit" class="menu-item" style="padding:12px 18px;">Post product</button>
-              <button type="button" id="cancelBtn" class="menu-item" style="background:#f0f0f0;color:#333;">Cancel</button>
-            </div>
+            <main class="content-area">
+              <h2 class="section-title">Add a New Product</h2>
+              <div class="featured-product" style="box-shadow:none; margin-bottom:20px;">
+                <form class="form" id="productForm" method="POST" action="/products" enctype="multipart/form-data" style="width:100%;max-width:400px;margin:0 auto;">
+                  <input name="name" placeholder="Product name" required style="margin-bottom:12px;" />
+                  <input name="price" placeholder="Price" required style="margin-bottom:12px;" />
+                  <input type="file" name="image" accept="image/*" required style="margin-bottom:18px;" />
+                  <button type="submit" class="menu-item" style="width:100%;margin-top:8px;">Post product</button>
+                </form>
+              </div>
+            </main>
           </div>
-        </form>
-      </div>
-    </main>
-  </div>
-
-  <footer>
-    <div class="copyright">© CPUT Marketplace. All rights reserved.</div>
-  </footer>
-
-  <script>
-    // Ensure API_BASE used when page served from Live Server
-    const API_BASE = window.__API_BASE__ || '';
-    document.getElementById('productForm').addEventListener('submit', async (e)=>{
-      e.preventDefault();
-      const form = e.target;
-      const data = new FormData(form);
-      try {
-        const res = await fetch(API_BASE + '/products', { method: 'POST', body: data });
-        const text = await res.text();
-        alert(text);
-        // On success, redirect to home page
-        if (res.ok) window.location.href = 'home/home.html';
-      } catch (err) {
-        alert('Upload failed: ' + err.message);
-      }
-    });
-    document.getElementById('cancelBtn').addEventListener('click', ()=>{ window.location.href='home/home.html' });
-  </script>
-</body>
-</html>
+          <footer>
+            <div class="copyright">© CPUT Marketplace. All rights reserved.</div>
+          </footer>
+          <script>
+            document.getElementById('productForm').addEventListener('submit', async (e)=>{
+              e.preventDefault();
+              const form = e.target;
+              const data = new FormData(form);
+              const API_BASE = globalThis.__API_BASE__ || '';
+              const res = await fetch(API_BASE + '/products', { method: 'POST', body: data });
+              const text = await res.text();
+              alert(text);
+              if (res.ok) globalThis.location.href = 'home/home.html';
+            });
+            document.getElementById('messengerIcon').onclick = function() {
+              globalThis.location.href = 'chat/chat.html';
+            };
+          </script>
+        </body>
+        </html>

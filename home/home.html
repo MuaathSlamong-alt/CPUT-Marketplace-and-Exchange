@@ -17,7 +17,7 @@
 
         <h1 class="header-title">CPUT Marketplace and Exchange</h1>
         <div class="header-icons">
-            <img src="../img/messenger_2111573.png" alt="Message" class="header-icon">
+            <img src="../img/messenger_2111573.png" alt="Message" class="header-icon" id="messengerIcon">
             <img src="../img/time_16601413.png" alt="Notifications" class="header-icon">
             <img src="../img/user_9190837.png" alt="User" class="header-icon">
         </div>
@@ -37,7 +37,7 @@
             <!-- Post product link visible to users in the sidebar -->
             <div style="margin:12px 0;">
                 <a href="../product.html" style="display:flex;align-items:center;text-decoration:none;padding:10px;background:#f4f4f4;border-radius:8px;">
-                    <img src="../img/upload_127070.png" alt="Post" style="width:28px;height:28px;margin-right:8px;"> 
+                    <img src="../img/post_17678551.png" alt="Post" style="width:28px;height:28px;margin-right:8px;"> 
                     <span>Post product</span>
                 </a>
             </div>
@@ -142,12 +142,17 @@
             if (hostname === '127.0.0.1' || hostname === 'localhost') {
                 // only set when we're on the Live Server port(s)
                 if (location.port === '5500' || location.port === '5501') {
-                    window.__API_BASE__ = 'http://localhost:3000';
+                    globalThis.__API_BASE__ = 'http://localhost:3000';
                 }
             }
         })();
     </script>
-    <script src="home.js"></script>
+        <script>
+            document.getElementById('messengerIcon').onclick = function() {
+                globalThis.location.href = 'chat/chat.html';
+            };
+        </script>
+        <script src="home.js"></script>
 
 </body>
 

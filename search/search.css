@@ -1,4 +1,13 @@
-{ box-sizing: border-box; }
+/* Main container layout for sidebar on the left */
+/* Main container layout for sidebar on the left */
+.main-container {
+    display: flex;
+    flex-grow: 1;
+    flex-wrap: wrap;
+}
+* {
+    box-sizing: border-box;
+}
 body {
     margin: 0;
     background-color: #f0ede9;
@@ -9,33 +18,117 @@ body {
     min-height: 100vh;
 }
 header {
-    background-color: #3a9ad9;
-    color: white;
+    background: #68A6D6;
+    padding: 15px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 16px;
+    flex-wrap: wrap;
+    gap: 15px;
 }
-header .left {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+.logo {
+    height: 70px;
+    width: 180px;
 }
-header .left img {
-    height: 40px;
-    width: 40px;
+.logo-img {
+    width: 100%;
+    height: 100%;
     object-fit: contain;
 }
-header .title {
-    font-weight: 600;
-    font-size: 16px;
-    white-space: nowrap;
+.header-title {
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    flex-grow: 1;
 }
-header .icons {
+.header-icons {
     display: flex;
-    gap: 24px;
-    font-size: 20px;
+    gap: 10px;
+}
+.header-icon {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    transition: transform 0.2s;
     cursor: pointer;
+}
+.header-icon:hover {
+    transform: scale(1.1);
+}
+/* Sidebar Styles (match home page) */
+.sidebar {
+    background: #C6CCCB;
+    padding: 20px;
+    min-width: 220px;
+    max-width: 260px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+/* Search bar container: fill width, button at far right */
+.search-container {
+    background: rgba(104, 166, 214, 0.7);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3), inset 0px 4px 4px rgba(0, 0, 0, 0.3);
+    border-radius: 25px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+    width: 100%;
+}
+.search-icon {
+    width: 20px;
+    object-fit: contain;
+}
+.search-text {
+    font-weight: 200;
+    font-size: 1.2rem;
+    color: #000000;
+}
+.menu-item {
+    background: #86B4D5;
+    border: 1px solid #000000;
+    border-radius: 15px;
+    padding: 12px 20px;
+    color: #FFFFFF;
+    font-size: 1.1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+    border: none;
+}
+.menu-item:hover {
+    transform: scale(1.02);
+    background: #7aa8c7;
+}
+.review-us-btn {
+    background: rgba(104, 166, 214, 0.7);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3), inset 0px 4px 4px rgba(0, 0, 0, 0.3);
+    border-radius: 25px;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    border: none;
+    cursor: pointer;
+}
+.review-us-btn:hover {
+    background: rgba(104, 166, 214, 0.9);
+}
+.review-us-text {
+    color: #FFFFFF;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+.review-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
 }
 .product-search {
     color: #a0a0a0;
@@ -43,44 +136,22 @@ header .icons {
     margin: 8px 0 4px 16px;
     user-select: none;
 }
-.search-container {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 0 16px;
-    margin-bottom: 24px;
-}
-.back-button {
-    font-size: 24px;
-    color: #3a9ad9;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    line-height: 1;
-}
+/* Remove duplicate and stray rules above */
 .search-input {
-    flex-grow: 1;
+    flex: 1 1 auto;
     border-radius: 9999px;
     border: none;
     background-color: #a3c1e9;
     color: white;
     font-size: 14px;
     padding: 6px 16px;
+    min-width: 0;
 }
-.search-input::placeholder { color: white; }
-.categories-label {
-    text-align: center;
-    font-weight: 600;
-    font-size: 11px;
-    margin-bottom: 12px;
-}
-.categories-grid {
-    max-width: 720px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 16px 16px;
+.menu-item#searchButton {
+    margin-left: 10px;
+    align-self: stretch;
+    width: 140px;
+    max-width: 200px;
 }
 .category-item {
     display: flex;
@@ -128,10 +199,12 @@ header .icons {
     user-select: none;
 }
 footer {
-    background-color: #3a9ad9;
-    color: white;
-    font-size: 9px;
+    background: #68A6D6;
+    padding: 15px;
     text-align: center;
-    padding: 4px 0;
-    user-select: none;
+    margin-top: auto;
+}
+.copyright {
+    color: #FFFFFF;
+    font-size: 0.9rem;
 }

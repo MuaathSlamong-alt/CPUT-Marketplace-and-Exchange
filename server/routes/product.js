@@ -4,7 +4,7 @@ import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import pool from '../models/db.js';
-import { createProduct, getApprovedProducts, approveProduct, getProductById, searchProducts } from '../models/product.js';
+import { createProduct, getApprovedProducts, getProductById, searchProducts } from '../models/product.js';
 
 const router = express.Router();
 
@@ -26,12 +26,6 @@ const upload = multer({ storage });
 // Middleware to check if user is logged in
 function requireLogin(req, res, next) {
   if (!req.session.user) return res.redirect('/login');
-  next();
-}
-
-// Middleware to check if user is admin
-function requireAdmin(req, res, next) {
-  if (!req.session.user || req.session.user.role !== 'admin') return res.status(403).send('Forbidden');
   next();
 }
 
@@ -81,10 +75,5 @@ router.post('/products', requireLogin, upload.single('image'), async (req, res) 
   }
 });
 
-// Admin approves a product
-router.post('/products/:id/approve', requireAdmin, async (req, res) => {
-  await approveProduct(req.params.id);
-  res.send('Product approved');
-});
 
 export default router;

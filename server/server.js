@@ -8,7 +8,7 @@ import { Server as SocketIO } from 'socket.io';
 import authRoutes from './routes/auth.js';
 import productRoutes from './routes/product.js';
 import chatRoutes from './routes/chat.js';
-import adminRoutes from './routes/admin.js';
+
 import ratingRoutes from './routes/rating.js';
 import reportRoutes from './routes/report.js';
 
@@ -43,7 +43,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use('/', authRoutes);
 app.use('/', productRoutes);
 app.use('/', chatRoutes);
-app.use('/', adminRoutes);
+
 app.use('/', ratingRoutes);
 app.use('/', reportRoutes);
 
