@@ -19,12 +19,14 @@ window.addEventListener('DOMContentLoaded', async () => {
             grid.innerHTML = '';
             products.forEach(product => {
                 grid.innerHTML += `
-                    <div class="product-card">
+                    <div class="product-card" data-product-id="${product.id}" data-seller-id="${product.seller_id}">
                         <div class="product-image-container">
                             <img src="${product.image}" alt="${product.name}" class="product-image">
                         </div>
                         <div class="product-price">R${product.price}</div>
                         <div class="product-name">${product.name}</div>
+                        <div class="product-seller">Seller: ${product.seller_username}</div>
+                        <div class="product-actions"><a href="../chat/chat.html?to=${product.seller_id}">Message seller</a></div>
                     </div>
                 `;
             });

@@ -10,7 +10,13 @@ export async function createProduct({ name, price, image, userId }) {
 }
 
 export async function getApprovedProducts() {
-  const [rows] = await pool.query('SELECT * FROM products WHERE approved = 1');
+  // Join with users to include seller info (id and username)
+  const [rows] = await pool.query(
+    `SELECT p.*, u.id AS seller_id, u.username AS seller_username
+     FROM products p
+     JOIN users u ON p.user_id = u.id
+     WHERE p.approved = 1`
+  );
   return rows;
 }
 
@@ -19,11 +25,23 @@ export async function approveProduct(productId) {
 }
 
 export async function getProductById(id) {
-  const [rows] = await pool.query('SELECT * FROM products WHERE id = ?', [id]);
+  const [rows] = await pool.query(
+    `SELECT p.*, u.id AS seller_id, u.username AS seller_username
+     FROM products p
+     JOIN users u ON p.user_id = u.id
+     WHERE p.id = ?`,
+    [id]
+  );
   return rows[0];
 }
 
 export async function searchProducts(q) {
-  const [rows] = await pool.query('SELECT * FROM products WHERE approved = 1 AND name LIKE ?', [`%${q}%`]);
+  const [rows] = await pool.query(
+    `SELECT p.*, u.id AS seller_id, u.username AS seller_username
+     FROM products p
+     JOIN users u ON p.user_id = u.id
+     WHERE p.approved = 1 AND p.name LIKE ?`,
+    [`%${q}%`]
+  );
   return rows;
 }
