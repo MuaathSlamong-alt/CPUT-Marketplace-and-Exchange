@@ -1,38 +1,54 @@
 globalThis.addEventListener('DOMContentLoaded', async () => {
-    // API base: when using Live Server, set window.__API_BASE__ to your backend (e.g. 'http://localhost:3000')
     const API_BASE = globalThis.__API_BASE__ || '';
-    // Menu item click handlers
-    const menuItems = document.querySelectorAll('.menu-item');
-    menuItems.forEach(item => {
-        item.addEventListener('click', function() {
-            // In a real app, this would filter products
-            console.log('Filtering by:', this.textContent);
-        });
-    });
-
-    // Fetch and render approved products dynamically
+    // Sidebar search logic
+    const sidebarSearchInput = document.getElementById('sidebarSearchInput');
+    const sidebarSearchButton = document.getElementById('sidebarSearchButton');
     const grid = document.querySelector('.products-grid');
-    if (grid) {
-        try {
-            const res = await fetch(API_BASE + '/products');
-            const products = await res.json();
-            grid.innerHTML = '';
-            products.forEach(product => {
-                grid.innerHTML += `
-                    <div class="product-card" data-product-id="${product.id}" data-seller-id="${product.seller_id}">
-                        <div class="product-image-container">
-                            <img src="${product.image}" alt="${product.name}" class="product-image">
-                        </div>
-                        <div class="product-price">R${product.price}</div>
-                        <div class="product-name">${product.name}</div>
-                        <div class="product-seller">Seller: ${product.seller_username}</div>
-                        <div class="product-actions"><a href="../chat/chat.html?to=${product.seller_id}">Message seller</a></div>
+
+    async function renderProducts(products) {
+        if (!grid) return;
+        grid.innerHTML = '';
+        products.forEach(product => {
+            grid.innerHTML += `
+                <div class="product-card" data-product-id="${product.id}" data-seller-id="${product.seller_id}">
+                    <div class="product-image-container">
+                        <img src="${product.image}" alt="${product.name}" class="product-image">
                     </div>
-                `;
-            });
+                    <div class="product-price">R${product.price}</div>
+                    <div class="product-name">${product.name}</div>
+                    <div class="product-seller">Seller: ${product.seller_username}</div>
+                    <div class="product-actions"><a href="../chat/chat.html?to=${product.seller_id}">Message seller</a></div>
+                </div>
+            `;
+        });
+    }
+
+    async function fetchAndRenderProducts(q = '') {
+        try {
+            const url = q ? `${API_BASE}/products?q=${encodeURIComponent(q)}` : `${API_BASE}/products`;
+            const res = await fetch(url);
+            const products = await res.json();
+            await renderProducts(products);
         } catch (e) {
-            grid.innerHTML = '<div style="color:red">Failed to load products.</div>';
+            if (grid) grid.innerHTML = '<div style="color:red">Failed to load products.</div>';
         }
+    }
+
+    // Initial load
+    await fetchAndRenderProducts();
+
+    // Sidebar search event
+    if (sidebarSearchButton && sidebarSearchInput) {
+        sidebarSearchButton.onclick = () => {
+            const q = sidebarSearchInput.value.trim();
+            fetchAndRenderProducts(q);
+        };
+        sidebarSearchInput.onkeydown = (e) => {
+            if (e.key === 'Enter') {
+                const q = sidebarSearchInput.value.trim();
+                fetchAndRenderProducts(q);
+            }
+        };
     }
 
     // Product card click handlers (after rendering)
@@ -49,7 +65,6 @@ globalThis.addEventListener('DOMContentLoaded', async () => {
     if (reviewBtn) {
         reviewBtn.addEventListener('click', function() {
             console.log('Review button clicked');
-            // Would open a review modal or page
         });
     }
 });

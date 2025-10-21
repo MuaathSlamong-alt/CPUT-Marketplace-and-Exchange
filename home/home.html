@@ -25,36 +25,26 @@
 
     <!-- Main Content Area -->
     <div class="main-container">
-        <!-- Sidebar Navigation -->
-        <aside class="sidebar">
-
-            <div class="search-container">
-                <a href="chat/search.html" style="display: flex; align-items: center; text-decoration: none;">
-                    <img src="../img/search_16705149.png" alt="Search" class="search-icon">
-                    <div class="search-text">Search</div>
-                </a>
-            </div>
-            <!-- Post product link visible to users in the sidebar -->
-            <div style="margin:12px 0;">
-                <a href="../product.html" style="display:flex;align-items:center;text-decoration:none;padding:10px;background:#f4f4f4;border-radius:8px;">
-                    <img src="../img/post_17678551.png" alt="Post" style="width:28px;height:28px;margin-right:8px;"> 
-                    <span>Post product</span>
-                </a>
-            </div>
-  
-            <button class="menu-item">Laptops</button>
-            <button class="menu-item">Hair</button>
-            <button class="menu-item">Textbooks</button>
-            <button class="menu-item">Clothes</button>
-
-            <button class="review-us-btn">
-                <span class="review-us-text">Review us</span>
-                <a href="rating.html">
-                    <img src="../img/review_707675.png" alt="" class="review-icon">
-                </a>
-            </button>
-
-        </aside>
+                <!-- Sidebar Navigation (Unified with chat.html) -->
+                <aside class="sidebar" aria-label="Sidebar navigation">
+                    <div class="search-container">
+                        <input type="search" id="sidebarSearchInput" class="search-input" placeholder="Search products by name..." style="flex:1;" />
+                        <button id="sidebarSearchButton" class="menu-item" style="margin-left:10px;">Search</button>
+                    </div>
+                    <div style="margin:12px 0;">
+                        <a href="../product.html" style="display:flex;align-items:center;text-decoration:none;padding:10px;background:#f4f4f4;border-radius:8px;">
+                            <img src="../img/post_17678551.png" alt="Post" style="width:28px;height:28px;margin-right:8px;"> 
+                            <span>Post product</span>
+                        </a>
+                    </div>
+                    <button class="menu-item" onclick="globalThis.location.href='../home/home.html'">Back to Home</button>
+                    <button class="menu-item" onclick="globalThis.location.href='../chat/chat.html'">Chat</button>
+                    <button class="menu-item" onclick="globalThis.location.href='../search/search.html'">Search</button>
+                    <button class="review-us-btn" onclick="globalThis.location.href='../rating/rating.html'">
+                        <span class="review-us-text">Review us</span>
+                        <img src="../img/review_707675.png" alt="" class="review-icon">
+                    </button>
+                </aside>
 
         <!-- Product Content Area -->
         <main class="content-area">
@@ -149,7 +139,7 @@
     </script>
         <script>
             document.getElementById('messengerIcon').onclick = function() {
-                globalThis.location.href = 'chat/chat.html';
+                globalThis.location.href = '../chat/chat.html';
             };
         </script>
         <script src="home.js"></script>

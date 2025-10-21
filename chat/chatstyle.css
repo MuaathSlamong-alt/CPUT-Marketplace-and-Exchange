@@ -179,7 +179,22 @@ header {
   padding: 16px 8px;
   height: 480px;
   overflow-y: auto;
-}
+  }
+  .chat-user {
+    padding: 10px 16px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    background: #f4f4f4;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.2s, box-shadow 0.2s;
+  }
+  .chat-user:hover {
+    background: #e0eaf6;
+    box-shadow: 0 2px 8px rgba(104,166,214,0.15);
+  }
 
 .chat-window-panel {
   flex: 1;

@@ -23,37 +23,38 @@
     </header>
 
     <div class="main-container">
-        <aside class="sidebar" aria-label="Sidebar navigation">
-            <div class="search-container">
-                <a href="../search/search.html" style="display:flex;align-items:center;text-decoration:none;">
-                    <img src="../img/search_16705149.png" alt="Search" class="search-icon">
-                    <div class="search-text">Search</div>
-                </a>
-            </div>
-            <div style="margin:12px 0;">
-                <a href="../product.html" style="display:flex;align-items:center;text-decoration:none;padding:10px;background:#f4f4f4;border-radius:8px;">
-                    <img src="../img/post_17678551.png" alt="Post" style="width:28px;height:28px;margin-right:8px;"> 
-                    <span>Post product</span>
-                </a>
-            </div>
-            <button class="menu-item" onclick="globalThis.location.href='../home/home.html'">Back to Home</button>
-            <button class="menu-item" onclick="globalThis.location.href='../chat/chat.html'">Chat</button>
-            <button class="menu-item" onclick="globalThis.location.href='../search/search.html'">Search</button>
-            <button class="review-us-btn" onclick="globalThis.location.href='../rating/rating.html'">
-                <span class="review-us-text">Review us</span>
-                <img src="../img/review_707675.png" alt="" class="review-icon">
-            </button>
-        </aside>
+                <!-- Sidebar Navigation (Unified with chat/home) -->
+                <aside class="sidebar" aria-label="Sidebar navigation">
+                    <div style="margin:12px 0;">
+                        <a href="../product.html" style="display:flex;align-items:center;text-decoration:none;padding:10px;background:#f4f4f4;border-radius:8px;">
+                            <img src="../img/post_17678551.png" alt="Post" style="width:28px;height:28px;margin-right:8px;"> 
+                            <span>Post product</span>
+                        </a>
+                    </div>
+                    <button class="menu-item" onclick="globalThis.location.href='../home/home.html'">Back to Home</button>
+                    <button class="menu-item" onclick="globalThis.location.href='../chat/chat.html'">Chat</button>
+                    <button class="menu-item" onclick="globalThis.location.href='../search/search.html'">Search</button>
+                    <button class="review-us-btn" onclick="globalThis.location.href='../rating/rating.html'">
+                        <span class="review-us-text">Review us</span>
+                        <img src="../img/review_707675.png" alt="" class="review-icon">
+                    </button>
+                </aside>
         <main class="content-area">
             <h2 class="section-title">Product Search</h2>
-            <div class="featured-product" style="box-shadow:none; margin-bottom:20px;max-width:500px;">
-                <div class="search-container" style="margin-bottom:16px;">
-                    <input type="search" id="searchInput" class="search-input" placeholder="Search products by name..." style="flex:1;" />
-                    <button id="searchButton" class="menu-item" style="margin-left:10px;">Search</button>
-                </div>
-                <div class="search-results-label">Search Results</div>
-                <div class="search-results" id="searchResults"></div>
+            <div class="search-container" style="margin-bottom:24px;max-width:700px;">
+                <input type="search" id="searchInput" class="search-input" placeholder="Search products by name..." style="flex:1;" />
+                <button id="searchButton" class="menu-item" style="margin-left:10px;">Search</button>
             </div>
+            <div class="category-boxes" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px 24px;margin-bottom:32px;max-width:700px;">
+                <div class="category-item"><div class="category-label">Laptops</div></div>
+                <div class="category-item"><div class="category-label">Mobile phones</div></div>
+                <div class="category-item"><div class="category-label">Books</div></div>
+                <div class="category-item"><div class="category-label">Peripherals</div></div>
+                <div class="category-item"><div class="category-label">Lab Equipment</div></div>
+                <div class="category-item"><div class="category-label">Services</div></div>
+            </div>
+            <div class="search-results-label" style="margin-bottom:12px;max-width:700px;">Search Results</div>
+            <div class="products-grid" id="searchResults" style="max-width:1200px;"></div>
         </main>
     </div>
     <footer>
