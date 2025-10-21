@@ -70,8 +70,18 @@
   </footer>
   <script>
     document.getElementById('messengerIcon').onclick = function() {
-      globalThis.location.href = '../chat/chat.html';
+      // Already on chat page, could scroll to top or refresh
+      globalThis.location.reload();
     };
+    
+    document.querySelector('img[alt="Notifications"]').onclick = function() {
+      globalThis.location.href = '../notifications.html';
+    };
+    
+    document.querySelector('img[alt="User"]').onclick = function() {
+      globalThis.location.href = '../login/login.html';
+    };
+    
     // Report user button logic
     document.getElementById('reportUserBtn').onclick = function() {
       // If a user is selected, pass their info to the report page

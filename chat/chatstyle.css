@@ -327,13 +327,16 @@ footer {
 }
 
 @media (max-width: 480px) {
+  .header-title {
+    font-size: 1.2rem;
+  }
   .header-icon {
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
   }
   .menu-item {
     padding: 10px 15px;
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
   .review-us-btn {
     padding: 10px 15px;
@@ -341,5 +344,17 @@ footer {
   .review-icon {
     width: 18px;
     height: 18px;
+  }
+  .chat-userlist-panel {
+    height: 150px;
+  }
+  .chat-window-panel {
+    height: 300px;
+  }
+  .sidebar {
+    padding: 15px;
+  }
+  .content-area {
+    padding: 15px;
   }
 }

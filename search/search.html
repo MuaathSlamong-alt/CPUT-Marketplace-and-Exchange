@@ -45,24 +45,38 @@
                 <input type="search" id="searchInput" class="search-input" placeholder="Search products by name..." style="flex:1;" />
                 <button id="searchButton" class="menu-item" style="margin-left:10px;">Search</button>
             </div>
-            <div class="category-boxes" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px 24px;margin-bottom:32px;max-width:700px;">
-                <div class="category-item"><div class="category-label">Laptops</div></div>
-                <div class="category-item"><div class="category-label">Mobile phones</div></div>
-                <div class="category-item"><div class="category-label">Books</div></div>
-                <div class="category-item"><div class="category-label">Peripherals</div></div>
-                <div class="category-item"><div class="category-label">Lab Equipment</div></div>
-                <div class="category-item"><div class="category-label">Services</div></div>
+            <div class="category-boxes" id="categoryBoxes" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px 24px;margin-bottom:32px;max-width:700px;">
+                <!-- Categories will be loaded dynamically -->
             </div>
             <div class="search-results-label" style="margin-bottom:12px;max-width:700px;">Search Results</div>
             <div class="products-grid" id="searchResults" style="max-width:1200px;"></div>
         </main>
     </div>
+
+    <!-- Product Modal -->
+    <div class="modal-overlay" id="productModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <div id="modalBody">
+                <!-- Product details will be inserted here -->
+            </div>
+        </div>
+    </div>
+
     <footer>
         <div class="copyright">© CPUT Marketplace. All rights reserved.</div>
     </footer>
     <script>
         document.getElementById('messengerIcon').onclick = function() {
             globalThis.location.href = '../chat/chat.html';
+        };
+        
+        document.querySelector('img[alt="Notifications"]').onclick = function() {
+            globalThis.location.href = '../notifications.html';
+        };
+        
+        document.querySelector('img[alt="User"]').onclick = function() {
+            globalThis.location.href = '../login/login.html';
         };
     </script>
     <script src="search.js"></script>

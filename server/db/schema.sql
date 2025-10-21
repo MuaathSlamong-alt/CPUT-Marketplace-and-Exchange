@@ -1,8 +1,13 @@
 -- Schema for CPUT Marketplace app
 -- Run: mysql -u root -pYOURPASSWORD hms < schema.sql
 
-CREATE DATABASE IF NOT EXISTS `hms` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE `hms`;
+CREATE DATABASE IF NOT EXISTS `cput` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `cput`;
+-- Categories table
+CREATE TABLE IF NOT EXISTS `categories` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `name` VARCHAR(100) NOT NULL UNIQUE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Users table
 CREATE TABLE IF NOT EXISTS `users` (
@@ -20,9 +25,11 @@ CREATE TABLE IF NOT EXISTS `products` (
   `price` DECIMAL(10,2) NOT NULL DEFAULT 0.00,
   `image` VARCHAR(255),
   `user_id` INT,
+  `category_id` INT NOT NULL,
   `approved` TINYINT(1) NOT NULL DEFAULT 0,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE SET NULL
+  FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE SET NULL,
+  FOREIGN KEY (`category_id`) REFERENCES `categories`(`id`) ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Messages table

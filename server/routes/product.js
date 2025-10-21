@@ -4,7 +4,7 @@ import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import pool from '../models/db.js';
-import { createProduct, getApprovedProducts, getProductById, searchProducts } from '../models/product.js';
+import { createProduct, getApprovedProducts, getApprovedProductsCount, getProductById, searchProducts, searchProductsCount, getCategories } from '../models/product.js';
 
 const router = express.Router();
 
@@ -31,16 +31,37 @@ function requireLogin(req, res, next) {
 
 
 
-// Show all approved products or search by query
+// Show all approved products or search by query with pagination
 router.get('/products', async (req, res) => {
   const q = req.query.q;
-  let products;
-  if (q) {
-    products = await searchProducts(q);
+  const categoryId = req.query.categoryId;
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const offset = (page - 1) * limit;
+  
+  let products, totalCount;
+  
+  if (q || categoryId) {
+    products = await searchProducts(q, categoryId, limit, offset);
+    totalCount = await searchProductsCount(q, categoryId);
   } else {
-    products = await getApprovedProducts();
+    products = await getApprovedProducts(limit, offset);
+    totalCount = await getApprovedProductsCount();
   }
-  res.json(products);
+  
+  const totalPages = Math.ceil(totalCount / limit);
+  
+  res.json({
+    products,
+    pagination: {
+      currentPage: page,
+      totalPages,
+      totalItems: totalCount,
+      itemsPerPage: limit,
+      hasNext: page < totalPages,
+      hasPrev: page > 1
+    }
+  });
 });
 
 // Product detail
@@ -52,13 +73,13 @@ router.get('/products/:id', async (req, res) => {
 
 // User submits a new product (multipart with image)
 router.post('/products', requireLogin, upload.single('image'), async (req, res) => {
-  const { name, price } = req.body;
+  const { name, price, categoryId } = req.body;
   let imagePath = '';
   if (req.file) {
     // expose path relative to served static root
     imagePath = `/img/uploads/${req.file.filename}`;
   }
-  if (!name || !price || !imagePath) return res.status(400).send('All fields required');
+  if (!name || !price || !imagePath || !categoryId) return res.status(400).send('All fields required');
 
   // Sanitize price: remove currency symbols/commas and parse to float
   const cleaned = String(price).replace(/[^0-9.\-]/g, '');
@@ -66,13 +87,19 @@ router.post('/products', requireLogin, upload.single('image'), async (req, res) 
   if (Number.isNaN(numericPrice)) return res.status(400).send('Invalid price');
 
   try {
-    await createProduct({ name, price: numericPrice, image: imagePath, userId: req.session.user.id });
+    await createProduct({ name, price: numericPrice, image: imagePath, userId: req.session.user.id, categoryId });
     // Since products are auto-approved, return success and the newly created product will appear on the home page
     res.send('Product posted');
   } catch (err) {
     console.error('Error creating product', err);
     res.status(500).send('Failed to save product');
   }
+});
+
+// Get all categories
+router.get('/categories', async (req, res) => {
+  const categories = await getCategories();
+  res.json(categories);
 });
 
 

@@ -55,6 +55,14 @@
     document.getElementById('messengerIcon').onclick = function() {
       globalThis.location.href = '../chat/chat.html';
     };
+    
+    document.querySelector('img[alt="Notifications"]').onclick = function() {
+      globalThis.location.href = '../notifications.html';
+    };
+    
+    document.querySelector('img[alt="User"]').onclick = function() {
+      globalThis.location.href = '../login/login.html';
+    };
     // Autofill subject if ?user= is present in query string
     const params = new URLSearchParams(globalThis.location.search);
     const reportedUser = params.get('user');

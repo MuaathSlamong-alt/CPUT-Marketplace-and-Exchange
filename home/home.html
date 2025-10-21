@@ -119,6 +119,16 @@
         </main>
     </div>
 
+    <!-- Product Modal -->
+    <div class="modal-overlay" id="productModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <div id="modalBody">
+                <!-- Product details will be inserted here -->
+            </div>
+        </div>
+    </div>
+
     <!-- Footer Section -->
     <footer>
         <div class="copyright">© CPUT Marketplace. All rights reserved.</div>
@@ -137,9 +147,27 @@
             }
         })();
     </script>
+    <script src="../js/auth.js"></script>
         <script>
             document.getElementById('messengerIcon').onclick = function() {
                 globalThis.location.href = '../chat/chat.html';
+            };
+            
+            document.querySelector('img[alt="Notifications"]').onclick = function() {
+                globalThis.location.href = '../notifications.html';
+            };
+            
+            document.querySelector('img[alt="User"]').onclick = async function() {
+                const user = await checkAuthStatus();
+                if (user) {
+                    // User is logged in, show logout or profile options
+                    if (confirm(`You are logged in as ${user.username}. Do you want to logout?`)) {
+                        globalThis.location.href = '/logout';
+                    }
+                } else {
+                    // User not logged in, go to login
+                    globalThis.location.href = '../login/login.html';
+                }
             };
         </script>
         <script src="home.js"></script>

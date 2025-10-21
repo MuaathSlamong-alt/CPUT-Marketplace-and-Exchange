@@ -36,8 +36,6 @@ app.use(express.static(path.join(__dirname, '../')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(session({ secret: 'cput-secret', resave: false, saveUninitialized: true }));
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
 
 // Auth and feature routes
 app.use('/', authRoutes);
@@ -57,7 +55,10 @@ app.get('/submit-product', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'product.html'));
 });
 
-// TODO: Add authentication, product, admin, chat routes
+// Notifications page
+app.get('/notifications', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'notifications.html'));
+});
 
 
 // Socket.IO for real-time chat
