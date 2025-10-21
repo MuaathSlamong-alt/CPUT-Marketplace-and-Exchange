@@ -124,8 +124,7 @@
     text-align: center;
     color: #4b4b4b;
 }
-/* Main container layout for sidebar on the left */
-/* Main container layout for sidebar on the left */
+
 .main-container {
     display: flex;
     flex-grow: 1;
@@ -197,7 +196,7 @@ header {
 .header-icon:hover {
     transform: scale(1.1);
 }
-/* Sidebar Styles (match home page) */
+/* Sidebar Styles */
 .sidebar {
     background: #C6CCCB;
     padding: 20px;
@@ -208,7 +207,7 @@ header {
     flex-direction: column;
     gap: 15px;
 }
-/* Search bar container: fill width, button at far right */
+
 .search-container {
     background: rgba(104, 166, 214, 0.7);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3), inset 0px 4px 4px rgba(0, 0, 0, 0.3);
@@ -276,7 +275,7 @@ header {
     margin: 8px 0 4px 16px;
     user-select: none;
 }
-/* Remove duplicate and stray rules above */
+
 .search-input {
     flex: 1 1 auto;
     border-radius: 9999px;

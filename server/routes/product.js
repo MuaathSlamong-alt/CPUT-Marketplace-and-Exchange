@@ -23,7 +23,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// Middleware to check if user is logged in
+// Check if user is logged in
 function requireLogin(req, res, next) {
   if (!req.session.user) return res.redirect('/login');
   next();
@@ -71,7 +71,7 @@ router.get('/products/:id', async (req, res) => {
   res.json(product);
 });
 
-// User submits a new product (multipart with image)
+// User submits a new product
 router.post('/products', requireLogin, upload.single('image'), async (req, res) => {
   const { name, price, categoryId } = req.body;
   let imagePath = '';
@@ -88,7 +88,7 @@ router.post('/products', requireLogin, upload.single('image'), async (req, res) 
 
   try {
     await createProduct({ name, price: numericPrice, image: imagePath, userId: req.session.user.id, categoryId });
-    // Since products are auto-approved, return success and the newly created product will appear on the home page
+    
     res.send('Product posted');
   } catch (err) {
     console.error('Error creating product', err);

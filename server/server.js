@@ -17,7 +17,7 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 const server = http.createServer(app);
-// Accept CORS from common Live Server origins (you can add/remove origins as needed)
+// Accept CORS from common Live Server origins
 const allowedOrigins = [
   'http://127.0.0.1:5500',
   'http://localhost:5500',

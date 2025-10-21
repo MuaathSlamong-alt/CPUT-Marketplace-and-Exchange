@@ -1,4 +1,3 @@
-// Global authentication helper functions for the frontend
 
 // Check if user is logged in
 async function checkAuthStatus() {

@@ -1,4 +1,4 @@
-// Rating page: submit rating and review to backend
+
 
 document.addEventListener('DOMContentLoaded', () => {
   const stars = document.querySelectorAll('.star');

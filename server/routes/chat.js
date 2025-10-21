@@ -3,7 +3,7 @@ import { createMessage, getMessagesBetweenUsers } from '../models/message.js';
 
 const router = express.Router();
 
-// Middleware to check if user is logged in
+// Check if user is logged in
 function requireLogin(req, res, next) {
   if (!req.session.user) return res.redirect('/login');
   next();
