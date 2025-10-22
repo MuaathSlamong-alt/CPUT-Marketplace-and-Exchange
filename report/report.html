@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>CPUT Report Page</title>
+  <title>Report Issue - CPUT Marketplace</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="../home/homestyle.css">
+  <link rel="stylesheet" href="reportstyle.css">
 </head>
 
 <body>
@@ -31,20 +32,59 @@
       <button class="menu-item" onclick="globalThis.location.href='../search/search.html'">Search</button>
     </aside>
     <main class="content-area">
-      <h2 class="section-title">Report an Issue</h2>
-      <div class="featured-product" style="box-shadow:none; margin-bottom:20px;max-width:500px;">
-        <form id="reportForm" style="width:100%;max-width:400px;margin:0 auto;">
-          <input type="text" placeholder="First Name" id="firstName" style="margin-bottom:12px;" />
-          <input type="text" placeholder="Last Name" id="lastName" style="margin-bottom:12px;" />
-          <input type="text" placeholder="Report Date" id="reportDate" style="margin-bottom:12px;" />
-          <input type="text" placeholder="Subject (e.g. username)" id="subject" style="margin-bottom:12px;" />
-          <textarea placeholder="Please enter what the issue was" id="message" maxlength="300"></textarea>
-          <div style="margin:6px 0;color:#888;font-size:0.95rem;">
-            <span class="char-count" id="charCount">0 / 300</span>
+      <div class="report-container">
+        <div class="report-header">
+          <h1 class="report-title">Report an Issue</h1>
+          <p class="report-subtitle">Help us maintain a safe and fair marketplace</p>
+        </div>
+
+        <div class="enhanced-success-message" id="successMessage">
+          <div>Thank you for your report!</div>
+          <div style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.9;">
+            We'll review your submission and take appropriate action.
           </div>
-          <button class="menu-item submit-btn" type="submit" style="width:100%;margin-top:8px;">SUBMIT</button>
+        </div>
+
+        <form id="reportForm">
+          <div class="form-section">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="firstName" class="form-label">First Name <span class="required-indicator">*</span></label>
+                <input type="text" id="firstName" class="form-input" placeholder="Enter your first name" />
+                <div class="form-validation-message" id="firstNameError">Please enter your first name</div>
+              </div>
+              <div class="form-group">
+                <label for="lastName" class="form-label">Last Name <span class="required-indicator">*</span></label>
+                <input type="text" id="lastName" class="form-input" placeholder="Enter your last name" />
+                <div class="form-validation-message" id="lastNameError">Please enter your last name</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="reportDate" class="form-label">Date of Incident <span class="required-indicator">*</span></label>
+              <input type="date" id="reportDate" class="form-input" />
+              <div class="form-validation-message" id="reportDateError">Please select the date when the issue occurred</div>
+            </div>
+            <div class="form-group">
+              <label for="subject" class="form-label">Subject/Person Being Reported <span class="required-indicator">*</span></label>
+              <input type="text" id="subject" class="form-input" placeholder="e.g., username, product name, or issue type" />
+              <div class="form-validation-message" id="subjectError">Please specify what or who you're reporting</div>
+            </div>
+            <div class="form-group">
+              <label for="message" class="form-label">Detailed Description <span class="required-indicator">*</span></label>
+              <textarea id="message" class="enhanced-textarea" placeholder="Please provide a detailed description of the issue. Include what happened, when it occurred, and any other relevant information..." maxlength="500"></textarea>
+              <div class="counter-section">
+                <span class="word-counter" id="wordCounter">0 words</span>
+                <span class="char-counter" id="charCounter">0 / 500 characters</span>
+              </div>
+              <div class="form-validation-message" id="messageError">Please provide a description (minimum 20 characters)</div>
+            </div>
+            <div class="submit-section">
+              <button type="submit" id="submitBtn" class="enhanced-submit-btn">
+                <span class="submit-text">Submit Report</span>
+              </button>
+            </div>
+          </div>
         </form>
-        <div class="thank-you" style="display:none;">Thank you for your submission!</div>
       </div>
     </main>
   </div>
@@ -63,62 +103,7 @@
     document.querySelector('img[alt="User"]').onclick = function() {
       globalThis.location.href = '../login/login.html';
     };
-    // Autofill subject if ?user= is present in query string
-    const params = new URLSearchParams(globalThis.location.search);
-    const reportedUser = params.get('user');
-    const subjectInput = document.getElementById("subject");
-    if (reportedUser) {
-      subjectInput.value = reportedUser;
-    }
-    const firstNameInput = document.getElementById("firstName");
-    const lastNameInput = document.getElementById("lastName");
-    const reportDateInput = document.getElementById("reportDate");
-    const messageTextarea = document.getElementById("message");
-    const reportForm = document.getElementById("reportForm");
-    const thankYouMessage = document.querySelector(".thank-you");
-    const charCount = document.getElementById("charCount");
-
-    // Live character count
-    messageTextarea.addEventListener("input", () => {
-      charCount.textContent = `${messageTextarea.value.length} / 300`;
-    });
-
-    reportForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const firstName = firstNameInput.value.trim();
-      const lastName = lastNameInput.value.trim();
-      const reportDate = reportDateInput.value.trim();
-      const subject = subjectInput.value.trim();
-      const message = messageTextarea.value.trim();
-
-      if (!firstName || !lastName || !reportDate || !subject || !message) {
-        alert("❗ Please fill in all fields.");
-        thankYouMessage.style.display = "none";
-        return;
-      }
-
-      // Submit to backend
-      const API_BASE = globalThis.__API_BASE__ || '';
-      await fetch(API_BASE + '/api/report', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ firstName, lastName, reportDate, subject, message })
-      });
-
-      // Show thank you message
-      thankYouMessage.style.display = "block";
-      reportForm.querySelector('.submit-btn').disabled = true;
-      setTimeout(() => {
-        firstNameInput.value = "";
-        lastNameInput.value = "";
-        reportDateInput.value = "";
-        subjectInput.value = "";
-        messageTextarea.value = "";
-        charCount.textContent = "0 / 300";
-        thankYouMessage.style.display = "none";
-        reportForm.querySelector('.submit-btn').disabled = false;
-      }, 4000);
-    });
   </script>
+  <script src="report.js"></script>
 </body>
 </html>

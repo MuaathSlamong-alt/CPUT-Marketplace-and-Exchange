@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CPUT Marketplace and Exchange</title>
+  <title>Rate Your Experience - CPUT Marketplace</title>
   <link rel="stylesheet" href="../home/homestyle.css">
+  <link rel="stylesheet" href="ratingstyle.css">
 </head>
 <body>
 
@@ -31,22 +32,50 @@
     </aside>
     <main class="content-area">
       <h2 class="section-title">Rate Your Experience</h2>
-      <div class="featured-product" style="box-shadow:none; margin-bottom:20px;max-width:500px;">
-        <div style="margin-bottom:18px;"><strong>YOUR RATING</strong></div>
-        <div class="rating" id="ratingStars">
-          <span class="star" data-value="1">&#9733;</span>
-          <span class="star" data-value="2">&#9733;</span>
-          <span class="star" data-value="3">&#9733;</span>
-          <span class="star" data-value="4">&#9733;</span>
-          <span class="star" data-value="5">&#9733;</span>
+      <div class="rating-container">
+        <div class="rating-card">
+          <!-- Rating Section -->
+          <div class="rating-section">
+            <h3 class="rating-label">How would you rate your experience?</h3>
+            <div class="rating-stars" id="ratingStars">
+              <span class="star" data-value="1" title="Poor">&#9733;</span>
+              <span class="star" data-value="2" title="Fair">&#9733;</span>
+              <span class="star" data-value="3" title="Good">&#9733;</span>
+              <span class="star" data-value="4" title="Very Good">&#9733;</span>
+              <span class="star" data-value="5" title="Excellent">&#9733;</span>
+            </div>
+            <div class="rating-text" id="ratingText">Click a star to rate</div>
+          </div>
+
+          <!-- Review Section -->
+          <div class="review-section">
+            <h3 class="review-label">Tell us about your experience</h3>
+            <div class="textarea-container">
+              <textarea 
+                id="reviewTextarea" 
+                placeholder="Share your thoughts about the marketplace, products, sellers, or overall experience. Your feedback helps us improve!" 
+                maxlength="500"
+                rows="8"></textarea>
+              <div class="word-count-container">
+                <span class="word-counter" id="wordCounter">0 words</span>
+                <span class="char-counter" id="charCounter">0 / 500 characters</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Section -->
+          <div class="submit-section">
+            <button class="submit-btn" id="submitBtn" disabled>
+              <span class="submit-text">Submit Rating</span>
+              <span class="submit-icon">⭐</span>
+            </button>
+            <div class="thank-you" id="thankYou">
+              <div class="success-icon">✅</div>
+              <h4>Thank you for your feedback!</h4>
+              <p>Your rating helps us improve the marketplace experience.</p>
+            </div>
+          </div>
         </div>
-        <div style="margin-bottom:8px;"><strong>YOUR REVIEW</strong></div>
-        <textarea placeholder="Type here..." maxlength="300"></textarea>
-        <div style="margin:6px 0;color:#888;font-size:0.95rem;">
-          <span class="char-counter">0 / 300</span>
-        </div>
-        <button class="menu-item submit-btn" style="width:100%;margin-top:8px;">SUBMIT</button>
-        <div class="thank-you" style="display:none;">Thank you for your feedback!</div>
       </div>
     </main>
   </div>

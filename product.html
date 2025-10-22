@@ -6,33 +6,298 @@
   <title>Post Product — CPUT Marketplace</title>
   <link rel="stylesheet" href="home/homestyle.css">
   <style>
+    /* Enhanced Product Page Styling */
+    .product-form-container {
+      max-width: 1000px;
+      width: 100%;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(104, 166, 214, 0.2);
+    }
+    
+    .form-header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-title {
+      color: #2c3e50;
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    
+    .form-subtitle {
+      color: #7f8c8d;
+      font-size: 0.95rem;
+      margin-bottom: 0;
+    }
+    
+    /* Two-column layout for form sections */
+    .form-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+    
+    .form-column {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    
+    .form-label {
+      display: block;
+      color: #34495e;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+    }
+    
     .form input, .form select {
       width: 100%;
-      padding: 12px;
-      margin-bottom: 15px;
-      border: 2px solid #ddd;
-      border-radius: 8px;
+      padding: 14px 16px;
+      border: 2px solid #e1e8ed;
+      border-radius: 10px;
       font-size: 1rem;
-      transition: border-color 0.2s ease;
+      transition: all 0.3s ease;
+      background: rgba(248, 249, 250, 0.8);
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+    
+    /* Remove number input spinner arrows and ensure text input behavior */
+    .form input[type="text"]#productPrice::-webkit-outer-spin-button,
+    .form input[type="text"]#productPrice::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    
+    .form input[type="text"]#productPrice {
+      -moz-appearance: textfield;
+      appearance: textfield;
+      cursor: text;
+    }
+    
+    /* Enhanced clickable styling for price input */
+    .form input[type="text"]#productPrice:hover {
+      border-color: #3498db;
+      background: rgba(255, 255, 255, 0.9);
     }
     
     .form input:focus, .form select:focus {
       outline: none;
       border-color: #3498db;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+      transform: translateY(-1px);
+    }
+    
+    .form input::placeholder {
+      color: #95a5a6;
+      font-weight: 400;
+    }
+    
+    .form select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'><path fill='%23666' d='M2 0L0 2h4zm0 5L0 3h4z'/></svg>");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 12px;
+      padding-right: 40px;
     }
     
     .form input[type="file"] {
-      padding: 8px;
-      background: #f9f9f9;
+      padding: 12px 16px;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border: 2px dashed #bdc3c7;
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .form input[type="file"]:hover {
+      border-color: #3498db;
+      background: linear-gradient(135deg, #ebf3fd 0%, #d6e9f7 100%);
+    }
+    
+    .form input[type="file"]:focus {
+      border-style: solid;
+    }
+    
+    .file-upload-hint {
+      font-size: 0.85rem;
+      color: #7f8c8d;
+      margin-top: 0.5rem;
+      text-align: center;
+    }
+    
+    .enhanced-submit-btn {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 16px 24px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+      margin-top: 1.5rem;
+      max-width: 300px;
+      justify-self: center;
+    }
+    
+    .enhanced-submit-btn:hover:not(:disabled) {
+      background: linear-gradient(135deg, #2980b9 0%, #1c6ea4 100%);
+      box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+      transform: translateY(-2px);
+    }
+    
+    .enhanced-submit-btn:disabled {
+      background: #bdc3c7;
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+    }
+    
+    .form-progress {
+      width: 100%;
+      height: 4px;
+      background: #ecf0f1;
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+    }
+    
+    .form-progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #3498db, #2ecc71);
+      border-radius: 2px;
+      transition: width 0.3s ease;
+      width: 0%;
+    }
+    
+    .required-indicator {
+      color: #e74c3c;
+      margin-left: 2px;
+    }
+    
+    .form-section {
+      padding: 1.5rem;
+      background: rgba(248, 249, 250, 0.5);
+      border-radius: 12px;
+      border: 1px solid rgba(189, 195, 199, 0.3);
+      height: fit-content;
+    }
+    
+    .section-heading {
+      color: #2c3e50;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid rgba(52, 152, 219, 0.2);
+    }
+    
+    /* Enhanced Content Area */
+    .content-area {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(248, 249, 250, 0.1) 100%);
+      border-radius: 0 0 0 16px;
+      padding: 2rem;
+    }
+    
+    .section-title {
+      color: #2c3e50;
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+    
+    .page-subtitle {
+      color: #7f8c8d;
+      font-size: 1.1rem;
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    
+    @media (max-width: 900px) {
+      .form-columns {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
+      .form-row {
+        grid-template-columns: 1fr;
+      }
     }
     
     @media (max-width: 768px) {
-      .featured-product {
-        padding: 16px;
+      .product-form-container {
+        padding: 1.5rem;
+        margin: 1rem;
+        border-radius: 12px;
+        max-width: 95%;
       }
       
-      .form {
-        max-width: 100% !important;
+      .content-area {
+        padding: 1.5rem;
+        border-radius: 0;
+      }
+      
+      .section-title {
+        font-size: 1.8rem;
+      }
+      
+      .form-title {
+        font-size: 1.4rem;
+      }
+      
+      .form input, .form select {
+        padding: 12px 14px;
+        font-size: 0.95rem;
+      }
+      
+      .form-columns {
+        gap: 1rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .product-form-container {
+        padding: 1rem;
+        margin: 0.5rem;
+        max-width: 98%;
+      }
+      
+      .section-title {
+        font-size: 1.6rem;
+      }
+      
+      .form-title {
+        font-size: 1.2rem;
+      }
+      
+      .form-section {
+        padding: 1rem;
       }
     }
   </style>
@@ -71,16 +336,64 @@
       </button>
     </aside>
             <main class="content-area">
-              <h2 class="section-title">Add a New Product</h2>
-              <div class="featured-product" style="box-shadow:none; margin-bottom:20px;">
-                <form class="form" id="productForm" method="POST" action="/products" enctype="multipart/form-data" style="width:100%;max-width:400px;margin:0 auto;">
-                  <input name="name" placeholder="Product name" required style="margin-bottom:12px;" />
-                  <input name="price" placeholder="Price" required style="margin-bottom:12px;" />
-                  <select name="categoryId" required style="margin-bottom:12px;padding:8px;border:1px solid #ddd;border-radius:4px;width:100%;">
-                    <option value="">Select a category</option>
-                  </select>
-                  <input type="file" name="image" accept="image/*" required style="margin-bottom:18px;" />
-                  <button type="submit" class="menu-item" style="width:100%;margin-top:8px;">Post product</button>
+              <h2 class="section-title">List Your Product</h2>
+              <p class="page-subtitle">Share your items with the CPUT community</p>
+              
+              <div class="product-form-container">
+                <div class="form-header">
+                  <h3 class="form-title">Product Details</h3>
+                  <p class="form-subtitle">Fill in the information below to list your product</p>
+                </div>
+                
+                <div class="form-progress">
+                  <div class="form-progress-bar" id="progressBar"></div>
+                </div>
+                
+                <form class="form" id="productForm" method="POST" action="/products" enctype="multipart/form-data">
+                  <div class="form-columns">
+                    <div class="form-column">
+                      <div class="form-section">
+                        <h4 class="section-heading">Basic Information</h4>
+                        
+                        <div class="form-group">
+                          <label for="productName" class="form-label">Product Name <span class="required-indicator">*</span></label>
+                          <input id="productName" name="name" placeholder="Enter your product name" required />
+                        </div>
+                        
+                        <div class="form-row">
+                          <div class="form-group">
+                            <label for="productPrice" class="form-label">Price <span class="required-indicator">*</span></label>
+                            <input id="productPrice" name="price" type="text" placeholder="Enter price" required />
+                          </div>
+                          
+                          <div class="form-group">
+                            <label for="productCategory" class="form-label">Category <span class="required-indicator">*</span></label>
+                            <select id="productCategory" name="categoryId" required>
+                              <option value="">Choose category</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="form-column">
+                      <div class="form-section">
+                        <h4 class="section-heading">Product Image</h4>
+                        
+                        <div class="form-group">
+                          <label for="productImage" class="form-label">Upload Image <span class="required-indicator">*</span></label>
+                          <input id="productImage" type="file" name="image" accept="image/*" required />
+                          <div class="file-upload-hint">
+                            Supported formats: JPG, PNG, GIF (Max size: 5MB)
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <button type="submit" class="enhanced-submit-btn" id="submitBtn">
+                      <span id="submitText">Post Product</span>
+                    </button>
+                  </div>
                 </form>
               </div>
             </main>
@@ -89,9 +402,11 @@
             <div class="copyright">© CPUT Marketplace. All rights reserved.</div>
           </footer>
           <script>
-            // Load categories on page load
+            // Enhanced Product Form with validation and progress tracking
             document.addEventListener('DOMContentLoaded', async () => {
               const API_BASE = globalThis.__API_BASE__ || '';
+              
+              // Load categories
               try {
                 const res = await fetch(API_BASE + '/categories');
                 const categories = await res.json();
@@ -105,26 +420,134 @@
               } catch (e) {
                 console.error('Failed to load categories:', e);
               }
+              
+              // Form validation and progress tracking
+              const form = document.getElementById('productForm');
+              const inputs = form.querySelectorAll('input[required], select[required]');
+              const progressBar = document.getElementById('progressBar');
+              const submitBtn = document.getElementById('submitBtn');
+              const submitText = document.getElementById('submitText');
+              
+              function updateProgress() {
+                let filledFields = 0;
+                inputs.forEach(input => {
+                  if (input.type === 'file') {
+                    if (input.files && input.files.length > 0) filledFields++;
+                  } else if (input.value.trim()) {
+                    filledFields++;
+                  }
+                });
+                
+                const progress = (filledFields / inputs.length) * 100;
+                progressBar.style.width = progress + '%';
+                
+                // Update submit button state
+                if (progress === 100) {
+                  submitBtn.disabled = false;
+                  submitText.textContent = 'Post Product';
+                } else {
+                  submitBtn.disabled = true;
+                  submitText.textContent = `Complete ${Math.ceil((inputs.length - filledFields))} more field(s)`;
+                }
+              }
+              
+              // Add event listeners for progress tracking
+              inputs.forEach(input => {
+                input.addEventListener('input', updateProgress);
+                input.addEventListener('change', updateProgress);
+              });
+              
+              // Enhanced file input feedback
+              const fileInput = document.getElementById('productImage');
+              fileInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                  // Validate file size (5MB limit)
+                  if (file.size > 5 * 1024 * 1024) {
+                    alert('File size must be less than 5MB. Please choose a smaller image.');
+                    this.value = '';
+                    updateProgress();
+                    return;
+                  }
+                  
+                  // Validate file type
+                  if (!file.type.startsWith('image/')) {
+                    alert('Please select a valid image file (JPG, PNG, GIF).');
+                    this.value = '';
+                    updateProgress();
+                    return;
+                  }
+                  
+                  // Show file name in hint
+                  const hint = document.querySelector('.file-upload-hint');
+                  hint.textContent = `Selected: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)`;
+                  hint.style.color = '#27ae60';
+                }
+              });
+              
+              // Initialize progress
+              updateProgress();
             });
 
-            document.getElementById('productForm').addEventListener('submit', async (e)=>{
+            // Enhanced form submission
+            document.getElementById('productForm').addEventListener('submit', async (e) => {
               e.preventDefault();
               
-              // Check if user is logged in first
               const API_BASE = globalThis.__API_BASE__ || '';
-              const authCheck = await fetch(API_BASE + '/api/me');
-              if (!authCheck.ok) {
-                alert('You must be logged in to post products. Redirecting to login page...');
-                globalThis.location.href = 'login/login.html';
+              const submitBtn = document.getElementById('submitBtn');
+              const submitText = document.getElementById('submitText');
+              const originalText = submitText.textContent;
+              
+              // Check if user is logged in first
+              try {
+                const authCheck = await fetch(API_BASE + '/api/me');
+                if (!authCheck.ok) {
+                  alert('You must be logged in to post products. Redirecting to login page...');
+                  globalThis.location.href = 'login/login.html';
+                  return;
+                }
+              } catch (error) {
+                alert('Unable to verify login status. Please check your connection.');
                 return;
               }
               
-              const form = e.target;
-              const data = new FormData(form);
-              const res = await fetch(API_BASE + '/products', { method: 'POST', body: data });
-              const text = await res.text();
-              alert(text);
-              if (res.ok) globalThis.location.href = 'home/home.html';
+              // Update button to show loading state
+              submitBtn.disabled = true;
+              submitText.textContent = 'Uploading...';
+              submitBtn.style.background = '#95a5a6';
+              
+              try {
+                const form = e.target;
+                const data = new FormData(form);
+                
+                const res = await fetch(API_BASE + '/products', { 
+                  method: 'POST', 
+                  body: data 
+                });
+                
+                const text = await res.text();
+                
+                if (res.ok) {
+                  // Success state
+                  submitText.textContent = 'Success!';
+                  submitBtn.style.background = 'linear-gradient(135deg, #27ae60 0%, #2ecc71 100%)';
+                  
+                  alert('Product posted successfully! Redirecting to home page...');
+                  setTimeout(() => {
+                    globalThis.location.href = 'home/home.html';
+                  }, 1000);
+                } else {
+                  throw new Error(text);
+                }
+              } catch (error) {
+                console.error('Error posting product:', error);
+                alert('Error posting product: ' + error.message);
+                
+                // Reset button state
+                submitBtn.disabled = false;
+                submitText.textContent = originalText;
+                submitBtn.style.background = '';
+              }
             });
             document.getElementById('messengerIcon').onclick = function() {
               globalThis.location.href = 'chat/chat.html';
